@@ -1,0 +1,58 @@
+:root {
+  --primary: #87ceeb;
+  --secondary: #166484;
+  --tertiary: #ecf7fc;
+}
+
+body {
+  margin: 0;
+  background-color: var(--tertiary);
+}
+
+/* Navbar Start */
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--primary);
+}
+
+.nav .header {
+  margin-left: 10px;
+  color: white;
+}
+
+.nav .dropdown {
+  width: 200px;
+}
+
+/* Navbar End */
+
+/* Dashboard Start */
+
+.dashboard {
+  margin: 10px;
+}
+
+.country-page {
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.card {
+  width: 30%;
+  height: max-content;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.ranking {
+  margin-left: 20px;
+}
+
+/* Dashboard End */
