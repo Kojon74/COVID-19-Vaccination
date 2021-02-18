@@ -44,11 +44,11 @@ def percent_vacc():
     fig = go.Figure(
         data=[go.Pie(labels=labels, values=values, hole=0.3, marker=marker)]
     )
+    fig.update_layout(title="Percentage of Population Vaccinated")
     return html.Div(
-        className="percent-vacc card",
+        className="percent-vacc stats-container",
         children=[
-            html.H5(children="Percentage of Population Vaccinated"),
-            dcc.Graph(id="percent-vaccinated", figure=fig),
+            dcc.Graph(className="card", id="percent-vaccinated", figure=fig),
             html.H6(children="Ranking"),
             html.Ol(
                 className="ranking",
@@ -63,15 +63,67 @@ def percent_vacc():
 
 
 def daily_vacc():
+    dates = ["Jan 1st", "Jan 2nd"]
+    daily_vaccinated = [100, 200]
+    fig = go.Figure(data=[go.Bar(x=dates, y=daily_vaccinated)])
+    fig.update_layout(
+        title="Number of Vaccinations per Day",
+        xaxis_title="Date",
+        yaxis_title="Number of Vaccinations",
+    )
     return html.Div(
-        className="daily-vacc card", children=[html.H5(children="Daily Vaccinations")]
+        className="daily-vacc stats-container",
+        children=[
+            dcc.Graph(className="card", id="daily-vaccination", figure=fig),
+            html.H6(children="Ranking"),
+            html.Ol(
+                className="ranking",
+                children=[
+                    html.Li(children="Canada"),
+                    html.Li(children="Japan"),
+                    html.Li(children="USA"),
+                ],
+            ),
+        ],
     )
 
 
 def pred_full_vacc():
+    dates = ["Jan 1st", "Jan 2nd"]
+    daily_vaccinated = [100, 200]
+    daily_cases = [300, 200]
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=dates, y=daily_vaccinated))
+    fig.add_trace(go.Scatter(x=dates, y=daily_cases))
+    fig.update_layout(
+        title="Predicted Fully Vaccinated Date",
+        xaxis_title="Date",
+        yaxis_title="Number of Vaccinations/Covid-19 Cases",
+    )
+    fig1 = go.Figure()
+    fig1.add_trace(go.Scatter(x=dates, y=daily_vaccinated))
+    fig1.add_trace(go.Scatter(x=dates, y=daily_cases))
+    fig2 = go.Figure()
+    fig2.add_trace(go.Scatter(x=dates, y=daily_vaccinated))
+    fig2.add_trace(go.Scatter(x=dates, y=daily_cases))
+    fig3 = go.Figure()
+    fig3.add_trace(go.Scatter(x=dates, y=daily_vaccinated))
+    fig3.add_trace(go.Scatter(x=dates, y=daily_cases))
+    top3_figs = [fig1, fig2, fig3]
     return html.Div(
-        className="pred-full-vacc card",
-        children=[html.H5(children="Predicted Fully Vaccinated Date")],
+        className="pred-full-vacc stats-container",
+        children=[
+            dcc.Graph(className="card", id="pred-full-vacc", figure=fig),
+            html.Div(
+                className="ranking-container",
+                children=[
+                    dcc.Graph(
+                        className="ranking card", id=f"pred-full-vacc-{i+1}", figure=fig
+                    )
+                    for i, fig in enumerate(top3_figs)
+                ],
+            ),
+        ],
     )
 
 

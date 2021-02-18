@@ -2,11 +2,12 @@
   --primary: #87ceeb;
   --secondary: #166484;
   --tertiary: #ecf7fc;
+  --lightgray: #f8f8f8;
 }
 
 body {
   margin: 0;
-  background-color: var(--tertiary);
+  background-color: var(--lightgray);
 }
 
 /* Navbar Start */
@@ -42,17 +43,30 @@ body {
   justify-content: space-between;
 }
 
-.card {
+.stats-container {
   width: 30%;
+  height: 300px !important;
+}
+
+.card {
+  width: 100%;
   height: max-content;
   padding: 10px;
-  border: 1px solid #ddd;
+  /* border: 1px solid #ddd; */
+  border: none;
   border-radius: 5px;
   background-color: white;
+  box-shadow: 2px 2px 2px 1px #ccc;
+}
+
+.ranking-container {
+  margin-top: 10px;
+  display: flex;
+  width: 100%;
 }
 
 .ranking {
-  margin-left: 20px;
+  width: 30%;
 }
 
 /* Dashboard End */
