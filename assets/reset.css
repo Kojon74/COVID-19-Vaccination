@@ -77,14 +77,12 @@ body {
   flex: 1;
 }
 
-.top-stat-container {
-  flex: 1;
-  padding: 0 5px;
-  box-sizing: border-box;
-}
-
 .top-stats {
+  flex: 1;
+  /* padding: 0 5px; */
+  /* box-sizing: border-box; */
   height: 85px;
+  margin-right: 7px;
 }
 
 .stat {
@@ -97,6 +95,7 @@ body {
   width: fit-content;
   margin: auto;
   font-size: 15px;
+  text-align: center;
 }
 
 .pred-full-vacc-container {
