@@ -295,7 +295,7 @@ def change_page(dropdown_value, n_clicks):
     new_df = pd.read_csv(f"./data/{country}_vaccinations.csv")
     page = homepage() if country == "Global" else countrypage(country)
     date = new_df.iloc[[-1]]["date"].to_string(index=False)
-    update_date = "{} {}".format(months[date[5:7]], date[8:])
+    update_date = "{} {}".format(months["Feb"], date[8:])
     population = (
         global_pop if country == "Global" else pypopulation.get_population(iso_code)
     )
