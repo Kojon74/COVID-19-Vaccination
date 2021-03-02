@@ -280,6 +280,7 @@ app.layout = html.Div(children=[navbar(), dashboard()])
     Output(component_id="sparkline", component_property="figure"),
     Output(component_id="pred-full-vacc", component_property="figure"),
     Output(component_id="nav-header", component_property="n_clicks"),
+    Output(component_id="region", component_property="value"),
     Input(component_id="region", component_property="value"),
     Input(component_id="nav-header", component_property="n_clicks"),
 )
@@ -295,8 +296,8 @@ def change_page(dropdown_value, n_clicks):
     new_df = pd.read_csv(f"./data/{country}_vaccinations.csv")
     page = homepage() if country == "Global" else countrypage(country)
     date = new_df.iloc[[-1]]["date"].to_string(index=False)
-    # update_date = "{} {}".format(months[date[5:7]], date[8:])
-    update_date = "Feb 15"
+    update_date = "{} {}".format(months[date[6:8]], date[9:])
+    # update_date = "Feb 15"
     population = (
         global_pop if country == "Global" else pypopulation.get_population(iso_code)
     )
@@ -309,7 +310,7 @@ def change_page(dropdown_value, n_clicks):
     )
     sparkline = sparkline_fig(new_df)
     pred = pred_full_vacc_fig(new_df, population)
-    return page, update_date, vaccinated, threshold, today, sparkline, pred, 0
+    return page, update_date, vaccinated, threshold, today, sparkline, pred, 0, country
 
 
 @app.callback(
