@@ -1,49 +1,60 @@
-date,daily_vaccinations,people_fully_vaccinated,vaccines
-2020-12-27,,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-28,1756.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-29,1756.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-30,1756.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-31,1756.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-01,1756.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-02,1756.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-03,1756.0,17.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-04,2181.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-05,2605.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-06,3030.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-07,3455.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-08,3879.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-09,4304.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-10,4729.0,54.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-11,5509.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-12,6289.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-13,7070.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-14,7850.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-15,8630.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-16,9410.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-17,10191.0,122.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-18,10953.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-19,11714.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-20,12476.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-21,13238.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-22,14000.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-23,14761.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-24,15523.0,9537.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-25,15003.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-26,14483.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-27,13962.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-28,13442.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-29,12921.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-30,12401.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-31,11881.0,32325.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-01,11139.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-02,10397.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-03,9655.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-04,8913.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-05,8171.0,57019.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-06,7932.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-07,7694.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-08,8198.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-09,8702.0,76103.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-10,10296.0,85806.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-11,13673.0,101507.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-12,16284.0,116206.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
+date,daily_vaccinations,people_fully_vaccinated
+2020-12-27,,
+2020-12-28,1757.0,
+2020-12-29,1757.0,
+2020-12-30,1757.0,
+2020-12-31,1757.0,
+2021-01-01,1757.0,
+2021-01-02,1757.0,
+2021-01-03,1757.0,
+2021-01-04,2184.0,
+2021-01-05,2611.0,
+2021-01-06,3038.0,
+2021-01-07,3465.0,
+2021-01-08,3892.0,
+2021-01-09,4319.0,
+2021-01-10,4746.0,9.0
+2021-01-11,5536.0,
+2021-01-12,6327.0,
+2021-01-13,7117.0,
+2021-01-14,7908.0,
+2021-01-15,8698.0,
+2021-01-16,9489.0,
+2021-01-17,10279.0,42.0
+2021-01-18,11047.0,
+2021-01-19,11814.0,
+2021-01-20,12581.0,
+2021-01-21,13348.0,
+2021-01-22,14115.0,
+2021-01-23,14882.0,
+2021-01-24,15650.0,9491.0
+2021-01-25,15159.0,
+2021-01-26,14668.0,
+2021-01-27,14177.0,
+2021-01-28,13686.0,
+2021-01-29,13195.0,
+2021-01-30,12704.0,
+2021-01-31,12213.0,32962.0
+2021-02-01,12358.0,
+2021-02-02,12503.0,
+2021-02-03,12648.0,
+2021-02-04,12793.0,
+2021-02-05,12938.0,
+2021-02-06,13083.0,
+2021-02-07,13228.0,83149.0
+2021-02-08,13454.0,
+2021-02-09,13679.0,
+2021-02-10,13905.0,
+2021-02-11,14130.0,
+2021-02-12,14355.0,
+2021-02-13,14581.0,
+2021-02-14,14806.0,145153.0
+2021-02-15,13415.0,
+2021-02-16,12024.0,
+2021-02-17,10633.0,152569.0
+2021-02-18,12432.0,168842.0
+2021-02-19,14974.0,187751.0
+2021-02-20,14980.0,
+2021-02-21,14987.0,
+2021-02-22,16385.0,
+2021-02-23,17783.0,217478.0

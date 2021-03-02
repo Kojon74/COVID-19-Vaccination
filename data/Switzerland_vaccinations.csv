@@ -1,51 +1,30 @@
-date,daily_vaccinations,people_fully_vaccinated,vaccines
-2020-12-23,,,"Moderna, Pfizer/BioNTech"
-2020-12-24,3000.0,,"Moderna, Pfizer/BioNTech"
-2020-12-25,3000.0,,"Moderna, Pfizer/BioNTech"
-2020-12-26,3000.0,,"Moderna, Pfizer/BioNTech"
-2020-12-27,3000.0,,"Moderna, Pfizer/BioNTech"
-2020-12-28,3000.0,,"Moderna, Pfizer/BioNTech"
-2020-12-29,3000.0,,"Moderna, Pfizer/BioNTech"
-2020-12-30,3000.0,,"Moderna, Pfizer/BioNTech"
-2020-12-31,3000.0,,"Moderna, Pfizer/BioNTech"
-2021-01-01,3000.0,,"Moderna, Pfizer/BioNTech"
-2021-01-02,3000.0,,"Moderna, Pfizer/BioNTech"
-2021-01-03,3000.0,,"Moderna, Pfizer/BioNTech"
-2021-01-04,3000.0,,"Moderna, Pfizer/BioNTech"
-2021-01-05,3000.0,,"Moderna, Pfizer/BioNTech"
-2021-01-06,3000.0,,"Moderna, Pfizer/BioNTech"
-2021-01-07,3000.0,,"Moderna, Pfizer/BioNTech"
-2021-01-08,3000.0,,"Moderna, Pfizer/BioNTech"
-2021-01-09,3000.0,,"Moderna, Pfizer/BioNTech"
-2021-01-10,3000.0,,"Moderna, Pfizer/BioNTech"
-2021-01-11,3000.0,,"Moderna, Pfizer/BioNTech"
-2021-01-12,3000.0,,"Moderna, Pfizer/BioNTech"
-2021-01-13,3000.0,,"Moderna, Pfizer/BioNTech"
-2021-01-14,3000.0,,"Moderna, Pfizer/BioNTech"
-2021-01-15,3829.0,,"Moderna, Pfizer/BioNTech"
-2021-01-16,4657.0,,"Moderna, Pfizer/BioNTech"
-2021-01-17,5486.0,,"Moderna, Pfizer/BioNTech"
-2021-01-18,6314.0,,"Moderna, Pfizer/BioNTech"
-2021-01-19,7143.0,,"Moderna, Pfizer/BioNTech"
-2021-01-20,10984.0,,"Moderna, Pfizer/BioNTech"
-2021-01-21,14826.0,,"Moderna, Pfizer/BioNTech"
-2021-01-22,14883.0,,"Moderna, Pfizer/BioNTech"
-2021-01-23,14939.0,,"Moderna, Pfizer/BioNTech"
-2021-01-24,14995.0,,"Moderna, Pfizer/BioNTech"
-2021-01-25,15587.0,,"Moderna, Pfizer/BioNTech"
-2021-01-26,16179.0,,"Moderna, Pfizer/BioNTech"
-2021-01-27,13758.0,,"Moderna, Pfizer/BioNTech"
-2021-01-28,11336.0,,"Moderna, Pfizer/BioNTech"
-2021-01-29,11872.0,,"Moderna, Pfizer/BioNTech"
-2021-01-30,14341.0,,"Moderna, Pfizer/BioNTech"
-2021-01-31,16809.0,,"Moderna, Pfizer/BioNTech"
-2021-02-01,17495.0,,"Moderna, Pfizer/BioNTech"
-2021-02-02,18180.0,,"Moderna, Pfizer/BioNTech"
-2021-02-03,18865.0,,"Moderna, Pfizer/BioNTech"
-2021-02-04,18610.0,,"Moderna, Pfizer/BioNTech"
-2021-02-05,18354.0,,"Moderna, Pfizer/BioNTech"
-2021-02-06,16165.0,,"Moderna, Pfizer/BioNTech"
-2021-02-07,13976.0,,"Moderna, Pfizer/BioNTech"
-2021-02-08,14706.0,,"Moderna, Pfizer/BioNTech"
-2021-02-09,15435.0,,"Moderna, Pfizer/BioNTech"
-2021-02-10,16165.0,,"Moderna, Pfizer/BioNTech"
+date,daily_vaccinations,people_fully_vaccinated
+2021-01-24,,
+2021-01-25,6227.0,
+2021-01-26,6492.0,
+2021-01-27,21200.0,
+2021-01-28,17634.0,
+2021-01-29,15336.0,
+2021-01-30,12902.0,
+2021-01-31,16900.0,
+2021-02-01,16855.0,
+2021-02-02,16832.0,
+2021-02-03,15570.0,
+2021-02-04,15598.0,
+2021-02-05,15622.0,
+2021-02-06,15634.0,
+2021-02-07,14172.0,
+2021-02-08,14408.0,
+2021-02-09,14640.0,
+2021-02-10,16173.0,
+2021-02-11,16439.0,
+2021-02-12,17008.0,
+2021-02-13,17109.0,
+2021-02-14,18322.0,102061.0
+2021-02-15,18586.0,106715.0
+2021-02-16,18910.0,112080.0
+2021-02-17,18664.0,137569.0
+2021-02-18,18952.0,143256.0
+2021-02-19,18895.0,149272.0
+2021-02-20,18919.0,150384.0
+2021-02-21,18867.0,172960.0

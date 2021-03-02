@@ -1,51 +1,59 @@
-date,daily_vaccinations,people_fully_vaccinated,vaccines
-2020-12-28,,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-29,309.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-30,338.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-31,567.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-01,570.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-02,459.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-03,385.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-04,333.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-05,382.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-06,589.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-07,675.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-08,784.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-09,1099.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-10,1176.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-11,1205.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-12,1244.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-13,1210.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-14,1178.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-15,1243.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-16,1109.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-17,1061.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-18,1043.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-19,1060.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-20,1000.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-21,1015.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-22,1074.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-23,1106.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-24,1112.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-25,1122.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-26,1124.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-27,1302.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-28,1378.0,6214.0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-29,1403.0,7607.0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-30,1647.0,9597.0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-31,1727.0,10155.0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-01,1781.0,10408.0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-02,1862.0,11310.0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-03,1915.0,12842.0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-04,2081.0,14330.0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-05,2254.0,15871.0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-06,2234.0,17376.0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-07,2196.0,17519.0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-08,2127.0,17564.0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-09,2236.0,,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-10,2180.0,19114.0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-11,2223.0,20026.0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-12,2286.0,21312.0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-13,2183.0,22126.0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-14,2145.0,22284.0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-15,2145.0,22343.0,"Moderna, Oxford/AstraZeneca, Pfizer/BioNTech"
+date,daily_vaccinations,people_fully_vaccinated
+2020-12-28,,
+2020-12-29,309.0,
+2020-12-30,338.0,
+2020-12-31,567.0,
+2021-01-01,570.0,
+2021-01-02,459.0,
+2021-01-03,385.0,
+2021-01-04,333.0,
+2021-01-05,382.0,
+2021-01-06,589.0,
+2021-01-07,675.0,
+2021-01-08,784.0,
+2021-01-09,1099.0,
+2021-01-10,1176.0,
+2021-01-11,1205.0,
+2021-01-12,1244.0,
+2021-01-13,1210.0,
+2021-01-14,1178.0,
+2021-01-15,1243.0,
+2021-01-16,1109.0,
+2021-01-17,1061.0,
+2021-01-18,1043.0,
+2021-01-19,1060.0,
+2021-01-20,1000.0,
+2021-01-21,1015.0,
+2021-01-22,1074.0,
+2021-01-23,1106.0,
+2021-01-24,1112.0,
+2021-01-25,1122.0,
+2021-01-26,1124.0,
+2021-01-27,1302.0,
+2021-01-28,1378.0,6214.0
+2021-01-29,1403.0,7607.0
+2021-01-30,1647.0,9597.0
+2021-01-31,1727.0,10155.0
+2021-02-01,1781.0,10408.0
+2021-02-02,1862.0,11310.0
+2021-02-03,1915.0,12842.0
+2021-02-04,2081.0,14330.0
+2021-02-05,2254.0,15871.0
+2021-02-06,2234.0,17376.0
+2021-02-07,2196.0,17519.0
+2021-02-08,2127.0,17564.0
+2021-02-09,2236.0,
+2021-02-10,2180.0,19114.0
+2021-02-11,2223.0,20026.0
+2021-02-12,2286.0,21312.0
+2021-02-13,2183.0,22126.0
+2021-02-14,2145.0,22284.0
+2021-02-15,2145.0,22343.0
+2021-02-16,1920.0,22573.0
+2021-02-17,1923.0,23149.0
+2021-02-18,2045.0,23812.0
+2021-02-19,2367.0,24827.0
+2021-02-20,2714.0,25831.0
+2021-02-21,2789.0,26053.0
+2021-02-22,2899.0,26375.0
+2021-02-23,3210.0,27277.0

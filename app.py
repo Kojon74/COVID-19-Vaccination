@@ -74,7 +74,7 @@ def navbar():
             html.Button(
                 className="header",
                 id="nav-header",
-                children="Global Covid Vaccination Progress",
+                children="Covid-19 Vaccination Progress",
                 n_clicks=0,
             ),
             dcc.Dropdown(
@@ -87,8 +87,7 @@ def navbar():
     )
 
 
-def percent_coutries():
-    cur_df = pd.read_csv("./data/_raw_data.csv")
+def percent_rankings(cur_df):
     cur_df = cur_df.groupby(["country", "iso_code"], as_index=False)[
         "daily_vaccinations"
     ].sum()
@@ -100,23 +99,34 @@ def percent_coutries():
             population = pypopulation.get_population(row["iso_code"])
         if population:
             percentage.append(
-                (
+                [
                     row["country"],
                     int(row["daily_vaccinations"] / population * 100),
-                ),
+                ],
             )
-    percentage.sort(key=lambda x: x[1])
-    top_countries = percentage[-10:]
+    num_countries = len(percentage)
+    percentage.sort(key=lambda x: x[1], reverse=True)
+    top_countries = percentage[:10]
+    canada, i = next(
+        ((x, i) for i, x in enumerate(percentage) if x[0] == "Canada"), None
+    )
+    canada[0] = f"Canada #{i}"
+    top_countries.append(canada)
+    top_countries.reverse()
     flipped = list(zip(*top_countries))
+    num_over_threshold = sum(1 for x in top_countries if x[1] > 70)
+    bar_colors = [colors["primary"]] * num_over_threshold + [colors["white"]] * (
+        11 - num_over_threshold
+    )
+    bar_colors[10] = "#ff0000"
+    bar_colors.reverse()
     fig = go.Figure(
-        go.Bar(
-            x=flipped[1],
-            y=flipped[0],
-            orientation="h",
-        ),
+        go.Bar(x=flipped[1], y=flipped[0], orientation="h", marker_color=bar_colors),
     )
     fig.update_layout(
-        title="Vaccination Progress Ranking",
+        title=f"Vaccination Progress Ranking ({num_countries} total)",
+        xaxis=dict(title="Percentage of Population Vaccinated"),
+        yaxis=dict(tickfont_size=10),
         margin=dict(t=30, l=10, b=5, r=10),
     )
     fig.update_xaxes(range=[0, 100])
@@ -130,15 +140,72 @@ def percent_coutries():
             "y": 0,
         },
     )
+    return fig
+
+
+def total_rankings(cur_df):
+    cur_df = cur_df.groupby(["country", "iso_code"], as_index=False)[
+        "daily_vaccinations"
+    ].sum()
+    cur_df["iso_code"].fillna("", inplace=True)
+    percentage = []
+    for i, row in cur_df.iterrows():
+        population = 0
+        if row["iso_code"] != "":
+            population = pypopulation.get_population(row["iso_code"])
+        if population:
+            percentage.append(
+                [
+                    row["country"],
+                    row["daily_vaccinations"],
+                ],
+            )
+    num_countries = len(percentage)
+    percentage.sort(key=lambda x: x[1], reverse=True)
+    top_countries = percentage[:10]
+    canada, i = next(
+        ((x, i) for i, x in enumerate(percentage) if x[0] == "Canada"), None
+    )
+    canada[0] = f"Canada #{i}"
+    top_countries.append(canada)
+    top_countries.reverse()
+    flipped = list(zip(*top_countries))
+    num_over_threshold = sum(1 for x in top_countries if x[1] > 70)
+    bar_colors = [colors["primary"]] * 11
+    bar_colors[10] = "#ff0000"
+    bar_colors.reverse()
+    fig = go.Figure(
+        go.Bar(x=flipped[1], y=flipped[0], orientation="h", marker_color=bar_colors),
+    )
+    fig.update_layout(
+        title=f"Vaccination Progress Ranking ({num_countries} total)",
+        xaxis=dict(title="Percentage of Population Vaccinated"),
+        yaxis=dict(tickfont_size=10),
+        margin=dict(t=30, l=10, b=5, r=10),
+    )
+    return fig
+
+
+def country_rankings():
+    cur_df = pd.read_csv("./data/_raw_data.csv")
+    fig = percent_rankings(cur_df)
     return html.Div(
         className="percent-countries-container",
         children=[
+            dcc.Tabs(
+                id="country-rankings",
+                value="percent",
+                children=[
+                    dcc.Tab(label="Percentage", value="percent"),
+                    dcc.Tab(label="Total", value="total"),
+                ],
+            ),
             dcc.Graph(
                 className="percent-countries-graph card",
                 id="percent-countries",
                 figure=fig,
                 config={"displayModeBar": False},
-            )
+            ),
         ],
     )
 
@@ -150,6 +217,7 @@ def vacc_velocity():
 def top_stat(stat, heading, class_id):
     return html.Div(
         className="top-stats card",
+        id=class_id,
         children=[
             html.Button(
                 className="info-button",
@@ -256,7 +324,7 @@ def right():
 def homepage():
     return html.Div(
         className="country-page",
-        children=[percent_coutries(), right()],
+        children=[country_rankings(), right()],
     )
 
 
@@ -285,19 +353,15 @@ app.layout = html.Div(children=[navbar(), dashboard()])
     Input(component_id="nav-header", component_property="n_clicks"),
 )
 def change_page(dropdown_value, n_clicks):
-    # if n_clicks != num_clicks:
-    #     num_clicks = n_clicks
-    # else:
-    print(n_clicks)
-    if n_clicks == 1:
+    if n_clicks == 1:  # If home button clicked
         country, iso_code = "Global", None
-    else:
+    else:  # If dropdown clicked
         country, iso_code = dropdown_value.split(",")
     new_df = pd.read_csv(f"./data/{country}_vaccinations.csv")
     page = homepage() if country == "Global" else countrypage(country)
     date = new_df.iloc[[-1]]["date"].to_string(index=False)
     update_date = "{} {}".format(months[date[6:8]], date[9:])
-    # update_date = "Feb 15"
+    # update_date = "{} {}".format(months[date[5:7]], date[8:])
     population = (
         global_pop if country == "Global" else pypopulation.get_population(iso_code)
     )
@@ -311,6 +375,17 @@ def change_page(dropdown_value, n_clicks):
     sparkline = sparkline_fig(new_df)
     pred = pred_full_vacc_fig(new_df, population)
     return page, update_date, vaccinated, threshold, today, sparkline, pred, 0, country
+
+
+@app.callback(
+    Output(component_id="percent-countries", component_property="figure"),
+    Input(component_id="country-rankings", component_property="value"),
+)
+def switch_ranking_graph(tab):
+    cur_df = pd.read_csv("./data/_raw_data.csv")
+    percent = percent_rankings(cur_df)
+    total = total_rankings(cur_df)
+    return percent if tab == "percent" else total
 
 
 @app.callback(

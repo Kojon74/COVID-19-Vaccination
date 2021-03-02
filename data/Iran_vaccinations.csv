@@ -1,3 +1,11 @@
-date,daily_vaccinations,people_fully_vaccinated,vaccines
-2021-02-08,,,Sputnik V
-2021-02-09,3000.0,,Sputnik V
+date,daily_vaccinations,people_fully_vaccinated
+2021-02-08,,
+2021-02-09,3000.0,
+2021-02-10,1938.0,
+2021-02-11,1583.0,
+2021-02-12,1406.0,
+2021-02-13,1300.0,
+2021-02-14,1229.0,
+2021-02-15,1179.0,
+2021-02-16,875.0,
+2021-02-17,875.0,

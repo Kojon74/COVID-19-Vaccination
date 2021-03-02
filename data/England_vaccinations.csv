@@ -1,65 +1,73 @@
-date,daily_vaccinations,people_fully_vaccinated,vaccines
-2020-12-13,,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-14,74067.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-15,74067.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-16,74067.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-17,74067.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-18,74067.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-19,74067.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-20,74067.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-21,68942.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-22,63817.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-23,58692.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-24,53567.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-25,48442.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-26,43317.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-27,38192.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-28,39870.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-29,41547.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-30,43225.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2020-12-31,44902.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-01,46580.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-02,48257.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-03,49935.0,20565.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-04,66128.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-05,82321.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-06,98515.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-07,114708.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-08,130901.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-09,147094.0,,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-10,163288.0,374613.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-11,160024.0,393925.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-12,163504.0,407294.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-13,175631.0,415656.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-14,192253.0,420510.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-15,215314.0,424327.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-16,231588.0,426102.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-17,230525.0,427386.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-18,234877.0,431136.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-19,251122.0,434125.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-20,261507.0,436848.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-21,272972.0,439182.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-22,287384.0,440300.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-23,311226.0,441074.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-24,317419.0,441684.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-25,326745.0,443010.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-26,320880.0,444011.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-27,311182.0,445101.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-28,308977.0,446372.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-29,310733.0,447898.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-30,325853.0,458150.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-01-31,339126.0,460907.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-01,345688.0,462503.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-02,351581.0,463889.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-03,369879.0,466171.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-04,376532.0,468782.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-05,371631.0,470723.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-06,358628.0,471324.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-07,349729.0,471636.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-08,345669.0,473055.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-09,347421.0,475228.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-10,341974.0,479320.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-11,342023.0,483966.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-12,347321.0,487699.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-13,343430.0,489885.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
-2021-02-14,337467.0,490722.0,"Oxford/AstraZeneca, Pfizer/BioNTech"
+date,daily_vaccinations,people_fully_vaccinated
+2020-12-13,,
+2020-12-14,74104.0,
+2020-12-15,74104.0,
+2020-12-16,74104.0,
+2020-12-17,74104.0,
+2020-12-18,74104.0,
+2020-12-19,74104.0,
+2020-12-20,74104.0,
+2020-12-21,68978.0,
+2020-12-22,63852.0,
+2020-12-23,58725.0,
+2020-12-24,53599.0,
+2020-12-25,48473.0,
+2020-12-26,43347.0,
+2020-12-27,38220.0,
+2020-12-28,39904.0,
+2020-12-29,41588.0,
+2020-12-30,43272.0,
+2020-12-31,44956.0,
+2021-01-01,46640.0,
+2021-01-02,48324.0,
+2021-01-03,50008.0,20579.0
+2021-01-04,66170.0,
+2021-01-05,82332.0,
+2021-01-06,98494.0,
+2021-01-07,114657.0,
+2021-01-08,130819.0,
+2021-01-09,146981.0,
+2021-01-10,163143.0,374613.0
+2021-01-11,159899.0,393925.0
+2021-01-12,163400.0,407294.0
+2021-01-13,175548.0,415656.0
+2021-01-14,192191.0,420510.0
+2021-01-15,215272.0,424327.0
+2021-01-16,231568.0,426102.0
+2021-01-17,230525.0,427386.0
+2021-01-18,234877.0,431136.0
+2021-01-19,251122.0,434125.0
+2021-01-20,261507.0,436848.0
+2021-01-21,272972.0,439182.0
+2021-01-22,287384.0,440300.0
+2021-01-23,311226.0,441074.0
+2021-01-24,317419.0,441684.0
+2021-01-25,326745.0,443010.0
+2021-01-26,320880.0,444011.0
+2021-01-27,311182.0,445101.0
+2021-01-28,308977.0,446372.0
+2021-01-29,310733.0,447898.0
+2021-01-30,325853.0,458150.0
+2021-01-31,339126.0,460907.0
+2021-02-01,345688.0,462503.0
+2021-02-02,351581.0,463889.0
+2021-02-03,369879.0,466171.0
+2021-02-04,376532.0,468782.0
+2021-02-05,371631.0,470723.0
+2021-02-06,358628.0,471324.0
+2021-02-07,349729.0,471636.0
+2021-02-08,345669.0,473055.0
+2021-02-09,347421.0,475228.0
+2021-02-10,341974.0,479320.0
+2021-02-11,342023.0,483966.0
+2021-02-12,347321.0,487699.0
+2021-02-13,343430.0,489885.0
+2021-02-14,337467.0,490722.0
+2021-02-15,332885.0,492576.0
+2021-02-16,333166.0,495704.0
+2021-02-17,345184.0,500201.0
+2021-02-18,346533.0,504762.0
+2021-02-19,330396.0,508657.0
+2021-02-20,312804.0,511089.0
+2021-02-21,302554.0,513435.0
+2021-02-22,293813.0,518779.0

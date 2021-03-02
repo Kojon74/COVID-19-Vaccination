@@ -1,20 +1,28 @@
-date,daily_vaccinations,people_fully_vaccinated,vaccines
-2021-01-28,,,"Oxford/AstraZeneca, Sinopharm/Beijing"
-2021-01-29,45000.0,,"Oxford/AstraZeneca, Sinopharm/Beijing"
-2021-01-30,45000.0,,"Oxford/AstraZeneca, Sinopharm/Beijing"
-2021-01-31,42000.0,,"Oxford/AstraZeneca, Sinopharm/Beijing"
-2021-02-01,50020.0,,"Oxford/AstraZeneca, Sinopharm/Beijing"
-2021-02-02,51458.0,,"Oxford/AstraZeneca, Sinopharm/Beijing"
-2021-02-03,51400.0,,"Oxford/AstraZeneca, Sinopharm/Beijing"
-2021-02-04,50246.0,,"Oxford/AstraZeneca, Sinopharm/Beijing"
-2021-02-05,51891.0,,"Oxford/AstraZeneca, Sinopharm/Beijing"
-2021-02-06,53424.0,,"Oxford/AstraZeneca, Sinopharm/Beijing"
-2021-02-07,54437.0,,"Oxford/AstraZeneca, Sinopharm/Beijing"
-2021-02-08,50010.0,,"Oxford/AstraZeneca, Sinopharm/Beijing"
-2021-02-09,51127.0,,"Oxford/AstraZeneca, Sinopharm/Beijing"
-2021-02-10,62531.0,,"Oxford/AstraZeneca, Sinopharm/Beijing"
-2021-02-11,71942.0,,"Oxford/AstraZeneca, Sinopharm/Beijing"
-2021-02-12,100553.0,,"Oxford/AstraZeneca, Sinopharm/Beijing"
-2021-02-13,132082.0,,"Oxford/AstraZeneca, Sinopharm/Beijing"
-2021-02-14,148680.0,,"Oxford/AstraZeneca, Sinopharm/Beijing"
-2021-02-15,165277.0,,"Oxford/AstraZeneca, Sinopharm/Beijing"
+date,daily_vaccinations,people_fully_vaccinated
+2021-01-28,,
+2021-01-29,45000.0,
+2021-01-30,45000.0,
+2021-01-31,42000.0,
+2021-02-01,50020.0,
+2021-02-02,51458.0,
+2021-02-03,51400.0,
+2021-02-04,50246.0,
+2021-02-05,51891.0,
+2021-02-06,53424.0,
+2021-02-07,54437.0,
+2021-02-08,50010.0,
+2021-02-09,51127.0,
+2021-02-10,62531.0,
+2021-02-11,71942.0,
+2021-02-12,100553.0,
+2021-02-13,132082.0,
+2021-02-14,148680.0,
+2021-02-15,165277.0,
+2021-02-16,184141.0,
+2021-02-17,190700.0,
+2021-02-18,196829.0,
+2021-02-19,178578.0,4867.0
+2021-02-20,153236.0,13476.0
+2021-02-21,138660.0,
+2021-02-22,124085.0,23667.0
+2021-02-23,108989.0,31232.0

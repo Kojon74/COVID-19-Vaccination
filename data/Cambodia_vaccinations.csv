@@ -1,3 +1,12 @@
-date,daily_vaccinations,people_fully_vaccinated,vaccines
-2021-02-09,,,Sinopharm/Beijing
-2021-02-10,1492.0,,Sinopharm/Beijing
+date,daily_vaccinations,people_fully_vaccinated
+2021-02-09,,
+2021-02-10,1492.0,
+2021-02-11,871.0,
+2021-02-12,663.0,
+2021-02-13,560.0,
+2021-02-14,498.0,
+2021-02-15,456.0,
+2021-02-16,427.0,
+2021-02-17,249.0,
+2021-02-18,312.0,
+2021-02-19,374.0,
