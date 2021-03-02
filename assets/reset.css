@@ -22,8 +22,11 @@ body {
 }
 
 .nav .header {
-  margin-left: 10px;
+  margin-left: 15px;
+  padding: 0;
+  border: none;
   color: white;
+  font-size: 20px;
 }
 
 .nav .dropdown {
@@ -77,13 +80,49 @@ body {
   flex: 1;
 }
 
+.card {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 2px 2px 2px 1px #ccc;
+  position: relative;
+}
+
 .top-stats {
   flex: 1;
-  /* padding: 0 5px; */
-  /* box-sizing: border-box; */
   height: 85px;
   margin-right: 7px;
 }
+
+.info-button {
+  position: absolute;
+  height: 0;
+  width: 0;
+  right: 0;
+  top: 0;
+  border: none;
+  z-index: 1;
+}
+
+.info {
+  height: 15px;
+  width: 15px;
+  border: solid 1px #aaa;
+  border-radius: 50%;
+  position: absolute;
+  right: 3px;
+  top: 3px;
+  color: #aaa;
+  font-size: 12px;
+  text-align: center;
+  line-height: 15px;
+  margin: 0;
+}
+
+/* .info:hover {
+  cursor: pointer;
+} */
 
 .stat {
   width: fit-content;
@@ -108,15 +147,6 @@ body {
 
 .pred-full-vacc-graph {
   flex: 1;
-}
-
-.card {
-  /* height: 100%; */
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: white;
-  box-shadow: 2px 2px 2px 1px #ccc;
 }
 
 /* Dashboard End */

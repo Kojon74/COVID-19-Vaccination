@@ -11,7 +11,10 @@ from dash.dependencies import Input, Output, State
 import plotly.graph_objects as go
 import plotly.express as px
 
-external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
+external_stylesheets = [
+    "https://codepen.io/chriddyp/pen/bWLwgP.css",
+    "https://use.fontawesome.com/releases/v5.8.1/css/all.css",
+]
 colors = {
     "primary": "#87ceeb",
     "secondary": "#166484",
@@ -66,7 +69,12 @@ def navbar():
     return html.Div(
         className="nav",
         children=[
-            html.H4(className="header", children="Global Covid Vaccination Progress"),
+            html.Button(
+                className="header",
+                id="nav-header",
+                children="Global Covid Vaccination Progress",
+                n_clicks=0,
+            ),
             dcc.Dropdown(
                 className="dropdown",
                 id="region",
@@ -98,7 +106,13 @@ def percent_coutries():
     percentage.sort(key=lambda x: x[1])
     top_countries = percentage[-10:]
     flipped = list(zip(*top_countries))
-    fig = go.Figure(go.Bar(x=flipped[1], y=flipped[0], orientation="h"))
+    fig = go.Figure(
+        go.Bar(
+            x=flipped[1],
+            y=flipped[0],
+            orientation="h",
+        ),
+    )
     fig.update_layout(
         title="Vaccination Progress Ranking",
         margin=dict(t=30, l=10, b=5, r=10),
@@ -121,6 +135,7 @@ def percent_coutries():
                 className="percent-countries-graph card",
                 id="percent-countries",
                 figure=fig,
+                config={"displayModeBar": False},
             )
         ],
     )
@@ -134,8 +149,13 @@ def top_stat(stat, heading, class_id):
     return html.Div(
         className="top-stats card",
         children=[
-            html.H2(className="stat", id=class_id, children=stat),
-            html.H6(className="header", children=heading),
+            html.Button(
+                className="info-button",
+                id=f"{class_id}-info",
+                children=html.P(className="info", children="?"),
+            ),
+            html.H2(className="stat", id=f"{class_id}-stat", children=stat),
+            html.H6(className="header", id=f"{class_id}-header", children=heading),
         ],
     )
 
@@ -169,8 +189,17 @@ def sparkline(cur_df):
     return html.Div(
         className="top-stats card",
         children=[
-            dcc.Graph(id="sparkline", figure=fig),
-            html.H6(className="header", children="Daily Vaccinations Past 7 Days"),
+            html.Button(
+                className="info-button",
+                id=f"sparkline-info",
+                children=html.P(className="info", children="?"),
+            ),
+            dcc.Graph(id="sparkline", figure=fig, config={"displayModeBar": False}),
+            html.H6(
+                className="header",
+                id="sparkline-header",
+                children="Daily Vaccinations Past 7 Days",
+            ),
         ],
     )
 
@@ -179,7 +208,7 @@ def top_stats():
     return html.Div(
         className="top-stats-container",
         children=[
-            top_stat("", "Latest Update", "update_date"),
+            top_stat("", "Latest Update", "update-date"),
             top_stat("", "Vaccinated", "vaccinated"),
             top_stat("", "Herd Immunity Threshold", "threshold"),
             top_stat("", "Vaccinnated Today", "today"),
@@ -242,16 +271,25 @@ app.layout = html.Div(children=[navbar(), dashboard()])
 
 @app.callback(
     Output(component_id="dashboard", component_property="children"),
-    Output(component_id="update_date", component_property="children"),
-    Output(component_id="vaccinated", component_property="children"),
-    Output(component_id="threshold", component_property="children"),
-    Output(component_id="today", component_property="children"),
+    Output(component_id="update-date-stat", component_property="children"),
+    Output(component_id="vaccinated-stat", component_property="children"),
+    Output(component_id="threshold-stat", component_property="children"),
+    Output(component_id="today-stat", component_property="children"),
     Output(component_id="sparkline", component_property="figure"),
     Output(component_id="pred-full-vacc", component_property="figure"),
+    Output(component_id="nav-header", component_property="n_clicks"),
     Input(component_id="region", component_property="value"),
+    Input(component_id="nav-header", component_property="n_clicks"),
 )
-def change_page(dropdown_value):
-    country, iso_code = dropdown_value.split(",")
+def change_page(dropdown_value, n_clicks):
+    # if n_clicks != num_clicks:
+    #     num_clicks = n_clicks
+    # else:
+    print(n_clicks)
+    if n_clicks == 1:
+        country, iso_code = "Global", None
+    else:
+        country, iso_code = dropdown_value.split(",")
     new_df = pd.read_csv(f"./data/{country}_vaccinations.csv")
     page = homepage() if country == "Global" else countrypage(country)
     date = new_df.iloc[[-1]]["date"].to_string(index=False)
@@ -268,7 +306,51 @@ def change_page(dropdown_value):
     )
     sparkline = sparkline_fig(new_df)
     pred = pred_full_vacc_fig(new_df, population)
-    return page, update_date, vaccinated, threshold, today, sparkline, pred
+    return page, update_date, vaccinated, threshold, today, sparkline, pred, 0
+
+
+@app.callback(
+    Output(component_id="update-date-header", component_property="children"),
+    Input(component_id="update-date-info", component_property="n_clicks"),
+)
+def show_info(n_clicks):
+    if n_clicks and n_clicks % 2:
+        return "Data is delayed by a couple days."
+    else:
+        return "Latest Update"
+
+
+@app.callback(
+    Output(component_id="vaccinated-header", component_property="children"),
+    Input(component_id="vaccinated-info", component_property="n_clicks"),
+)
+def show_info(n_clicks):
+    if n_clicks and n_clicks % 2:
+        return "Percentage of total population vaccinated."
+    else:
+        return "Vaccinated"
+
+
+@app.callback(
+    Output(component_id="threshold-header", component_property="children"),
+    Input(component_id="threshold-info", component_property="n_clicks"),
+)
+def show_info(n_clicks):
+    if n_clicks and n_clicks % 2:
+        return "Rough estimate of number of people needed to be vaccinated."
+    else:
+        return "Herd Immunity Threshold"
+
+
+@app.callback(
+    Output(component_id="today-header", component_property="children"),
+    Input(component_id="today-info", component_property="n_clicks"),
+)
+def show_info(n_clicks):
+    if n_clicks and n_clicks % 2:
+        return "Rough estimate of number of people needed to be vaccinated."
+    else:
+        return "Vaccinated Today"
 
 
 if __name__ == "__main__":
