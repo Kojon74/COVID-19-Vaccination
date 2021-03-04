@@ -91,8 +91,8 @@ class VaccinationData:
     def get_stats(self):
         """"""
         date = self.most_recent_date(self.raw_df)
-        # update_date = "{} {}".format(self.months[date[6:8]], date[9:])
-        date = "{} {}".format(self.months[date[5:7]], date[8:])
+        date = "{} {}".format(self.months[date[6:8]], date[9:])
+        # date = "{} {}".format(self.months[date[5:7]], date[8:])
         self.cur_pop = (
             self.globl_pop
             if self.cur_ctry == "Global"
