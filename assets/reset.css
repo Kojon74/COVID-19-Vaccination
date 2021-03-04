@@ -57,6 +57,33 @@ body {
   flex: 3;
 }
 
+.custom-tab {
+  padding: 20px 10px !important;
+  border-right: 0.5px solid #d6d6d6 !important;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.tab-selected {
+  border-right: none !important;
+  border-left: none !important;
+  border-top: 3px solid var(--primary) !important;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 2px 1px #ccc;
+}
+
+.custom-tab span {
+  font-size: 15px;
+}
+
+.ranking-graph-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+
 .percent-countries-graph {
   flex: 1;
 }
@@ -128,6 +155,7 @@ body {
   width: fit-content;
   margin: auto;
   color: var(--primary);
+  font-size: 30px;
 }
 
 .top-stats-container .header {

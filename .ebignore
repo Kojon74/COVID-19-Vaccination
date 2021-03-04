@@ -1,0 +1,11 @@
+env/
+
+_data/
+
+c3aidatalake-notebooks-python/
+
+.gitignore
+
+clean_data.ipynb
+
+Procfile
