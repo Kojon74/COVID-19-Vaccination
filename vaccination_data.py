@@ -90,7 +90,7 @@ class VaccinationData:
 
     def get_stats(self):
         """"""
-        date = datetime.strptime(self.most_recent_date(self.raw_df), "%Y-%m-%d")
+        date = datetime.strptime(self.most_recent_date(self.raw_df).strip(), "%Y-%m-%d")
         date = "{} {}".format(self.months[date.month - 1], date.day)
         self.cur_pop = (
             self.globl_pop
