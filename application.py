@@ -26,7 +26,7 @@ app = dash.Dash(
     suppress_callback_exceptions=True,
 )
 
-server = app.server
+application = app.server
 data = VaccinationData()
 
 
@@ -395,4 +395,5 @@ def show_info(n0, n1, n2, n3, n4, s0, s1, s2, s3, s4):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    # app.run_server(debug=True)
+    application.run(debug=True, port=8080)

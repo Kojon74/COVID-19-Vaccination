@@ -10,20 +10,20 @@ class VaccinationData:
     """
 
     def __init__(self):
-        self.months = {
-            "01": "Jan",
-            "02": "Feb",
-            "03": "Mar",
-            "04": "Apr",
-            "05": "May",
-            "06": "Jun",
-            "07": "Jul",
-            "08": "Aug",
-            "09": "Sep",
-            "10": "Oct",
-            "11": "Nov",
-            "12": "Dec",
-        }
+        self.months = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+        ]
         self.raw_df = pd.read_csv("./data/_raw_data.csv")
         self.globl_pop = 7_800_000_000
         self.herd_imm_thrsh = 70
@@ -90,9 +90,8 @@ class VaccinationData:
 
     def get_stats(self):
         """"""
-        date = self.most_recent_date(self.raw_df)
-        date = "{} {}".format(self.months[date[6:8]], date[9:])
-        # date = "{} {}".format(self.months[date[5:7]], date[8:])
+        date = datetime.strptime(self.most_recent_date(self.raw_df), "%Y-%m-%d")
+        date = "{} {}".format(self.months[date.month - 1], date.day)
         self.cur_pop = (
             self.globl_pop
             if self.cur_ctry == "Global"
