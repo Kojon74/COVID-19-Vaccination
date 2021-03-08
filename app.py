@@ -1,14 +1,8 @@
-import math
-import pandas as pd
-import numpy as np
-import pypopulation
-
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 import plotly.graph_objects as go
-import plotly.express as px
 
 from vaccination_data import VaccinationData
 
@@ -16,9 +10,6 @@ external_stylesheets = [
     "https://codepen.io/chriddyp/pen/bWLwgP.css",
     "https://use.fontawesome.com/releases/v5.8.1/css/all.css",
 ]
-
-
-df = pd.read_csv("./data/Global_vaccinations.csv")
 
 app = dash.Dash(
     __name__,
@@ -31,6 +22,9 @@ data = VaccinationData()
 
 
 def navbar():
+    """
+    Layout for navbar.
+    """
     return html.Div(
         className="nav",
         children=[
@@ -51,7 +45,10 @@ def navbar():
     )
 
 
-def percent_rankings(cur_df):
+def percent_rankings():
+    """
+    Returns bar chart of top 10 countries with highest vaccination percentages.
+    """
     top_ctrys, bar_clrs = data.top_countries_percent()
     fig = go.Figure(
         go.Bar(x=top_ctrys[1], y=top_ctrys[0], orientation="h", marker_color=bar_clrs),
@@ -75,7 +72,10 @@ def percent_rankings(cur_df):
     return fig
 
 
-def total_rankings(cur_df):
+def total_rankings():
+    """
+    Returns bar chart of top 10 countries with highest total vaccinations.
+    """
     top_ctrys, bar_clrs = data.top_countries_total()
     fig = go.Figure(
         go.Bar(x=top_ctrys[1], y=top_ctrys[0], orientation="h", marker_color=bar_clrs),
@@ -88,7 +88,10 @@ def total_rankings(cur_df):
     return fig
 
 
-def past_week_rankings(cur_df):
+def past_week_rankings():
+    """
+    Returns bar chart of top 10 countries with highest total vaccinations in past week.
+    """
     top_ctrys, bar_clrs = data.top_countries_past_week()
     fig = go.Figure(
         go.Bar(x=top_ctrys[1], y=top_ctrys[0], orientation="h", marker_color=bar_clrs),
@@ -102,8 +105,10 @@ def past_week_rankings(cur_df):
 
 
 def country_rankings():
-    cur_df = pd.read_csv("./data/_raw_data.csv")
-    fig = percent_rankings(cur_df)
+    """
+    Returns layout for country ranking chart.
+    """
+    fig = percent_rankings()
     return html.Div(
         className="percent-countries-container",
         children=[
@@ -157,6 +162,9 @@ def country_rankings():
 
 
 def top_stat_content(stat, heading, class_id):
+    """
+    Returns layout for statistics contained within the top statistic cards.
+    """
     return html.Div(
         children=[
             html.H2(className="stat", id=f"{class_id}-stat", children=stat),
@@ -166,6 +174,9 @@ def top_stat_content(stat, heading, class_id):
 
 
 def top_stat(stat, heading, class_id):
+    """
+    Returns layout for each statistic card.
+    """
     return html.Div(
         className="top-stats card",
         children=[
@@ -181,12 +192,12 @@ def top_stat(stat, heading, class_id):
 
 def sparkline_fig():
     """
-    Draw sparkline.
+    Returns sparkline visualizing vaccination trend in the past week for the current country.
     """
     past_week = data.past_week()
     fig = go.Figure(
         go.Scatter(
-            x=np.arange(7),
+            x=list(range(7)),
             y=past_week["daily_vaccinations"],
             marker=dict(size=1),
             line=dict(color="#87ceeb"),
@@ -204,6 +215,9 @@ def sparkline_fig():
 
 
 def sparkline_content(fig):
+    """
+    Returns layout for sparkline statistics contained within the top statistic cards.
+    """
     return html.Div(
         children=[
             dcc.Graph(
@@ -219,6 +233,9 @@ def sparkline_content(fig):
 
 
 def sparkline():
+    """
+    Returns layout for sparkline card.
+    """
     return html.Div(
         className="top-stats card",
         children=[
@@ -233,6 +250,9 @@ def sparkline():
 
 
 def top_stats():
+    """
+    Returns layout for top stats container.
+    """
     return html.Div(
         className="top-stats-container",
         children=[
@@ -246,6 +266,9 @@ def top_stats():
 
 
 def pred_full_vacc_fig():
+    """
+    Returns line chart of cumulative vaccination percentage over time.
+    """
     daily_vacc, dates = data.cum_vacc_percent()
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=dates, y=daily_vacc))
@@ -258,6 +281,9 @@ def pred_full_vacc_fig():
 
 
 def pred_full_vacc():
+    """
+    Returns layout of predicted fuly vaccinated date chart.
+    """
     fig = pred_full_vacc_fig()
     return html.Div(
         className="pred-full-vacc-container",
@@ -270,6 +296,9 @@ def pred_full_vacc():
 
 
 def right():
+    """
+    Returns layout for right hand side component.
+    """
     return html.Div(
         className="right",
         children=[top_stats(), pred_full_vacc()],
@@ -277,6 +306,9 @@ def right():
 
 
 def homepage():
+    """
+    Returns layout for homepage.
+    """
     return html.Div(
         className="country-page",
         children=[country_rankings(), right()],
@@ -284,10 +316,16 @@ def homepage():
 
 
 def countrypage(country):
+    """
+    Returns layout for specific coutry's page.
+    """
     return html.Div(className="country-page", children=[right()])
 
 
 def dashboard():
+    """
+    Returns top-level layout
+    """
     return html.Div(className="dashboard", id="dashboard", children=[homepage()])
 
 
@@ -302,28 +340,37 @@ app.layout = html.Div(children=[navbar(), dashboard()])
     Output(component_id="today-stat", component_property="children"),
     Output(component_id="sparkline-stat", component_property="figure"),
     Output(component_id="pred-full-vacc", component_property="figure"),
-    Output(component_id="nav-header", component_property="n_clicks"),
     Output(component_id="region", component_property="value"),
     Input(component_id="region", component_property="value"),
     Input(component_id="nav-header", component_property="n_clicks"),
 )
 def change_page(dropdown_value, n_clicks):
+    """
+    Change page based on change in dropdown menu or by clicking the nav-header.
+    Params:
+        dropdown_value: The country selected in the dropdown menu
+    Returns:
+        page: The layout of the new page
+        date, vaccinated, threshold, today: See VaccinationData.get_stats()
+        sparkline, pred: See corrisponding functions
+        new_dd_value: So that it shows 'Global' in DD when you click nav-header
+    """
     ctx = dash.callback_context
     if not ctx.triggered:
         input_id = None
     else:
         input_id = ctx.triggered[0]["prop_id"].split(".")[0]
     if input_id and input_id == "nav-header":  # If home button clicked
-        data.cur_ctry, data.cur_iso = "Global", None
+        data.cur_ctry, data.cur_iso = "Global", ""
     elif input_id:  # If dropdown clicked
         data.cur_ctry, data.cur_iso = dropdown_value.split(",")
-    data.cur_df = pd.read_csv(f"./data/{data.cur_ctry}_vaccinations.csv")
+    data.set_cur_df()
     page = homepage() if data.cur_ctry == "Global" else countrypage(data.cur_ctry)
     date, vaccinated, threshold, today = data.get_stats()
     sparkline = sparkline_fig()
     pred = pred_full_vacc_fig()
     new_dd_val = f"{data.cur_ctry},{data.cur_iso}"
-    return page, date, vaccinated, threshold, today, sparkline, pred, 0, new_dd_val
+    return page, date, vaccinated, threshold, today, sparkline, pred, new_dd_val
 
 
 @app.callback(
@@ -332,10 +379,12 @@ def change_page(dropdown_value, n_clicks):
     prevent_initial_call=True,
 )
 def switch_ranking_graph(tab):
-    cur_df = pd.read_csv("./data/_raw_data.csv")
-    percent = percent_rankings(cur_df)
-    total = total_rankings(cur_df)
-    past_week = past_week_rankings(cur_df)
+    """
+    Return the correct figure based on the current tab.
+    """
+    percent = percent_rankings()
+    total = total_rankings()
+    past_week = past_week_rankings()
     return percent if tab == "percent" else total if tab == "total" else past_week
 
 
@@ -358,6 +407,9 @@ def switch_ranking_graph(tab):
     prevent_initial_call=True,
 )
 def show_info(n0, n1, n2, n3, n4, s0, s1, s2, s3, s4):
+    """
+    Handles the clicking of the info button on the top stats cards.
+    """
     num_clicks = [n0, n1, n2, n3, n4]
     cur_states = [s0, s1, s2, s3, s4]
     input_ids = ["update-date", "vaccinated", "threshold", "today", "sparkline"]

@@ -1,7 +1,9 @@
+import boto3
 import pandas as pd
 import numpy as np
 import pypopulation
 from datetime import datetime, timedelta
+from io import StringIO
 
 
 class VaccinationData:
@@ -24,7 +26,8 @@ class VaccinationData:
             "Nov",
             "Dec",
         ]
-        self.raw_df = pd.read_csv("./data/_raw_data.csv")
+        self.connect_aws()
+        self.set_cur_df("_raw_data.csv", True)
         self.globl_pop = 7_800_000_000
         self.herd_imm_thrsh = 70
         self.set_home()
@@ -48,11 +51,36 @@ class VaccinationData:
         }
 
     def set_home(self):
-        self.cur_df = pd.read_csv("./data/Global_vaccinations.csv")
         self.cur_ctry = "Global"
+        self.set_cur_df()
         self.cur_iso = ""
         self.cur_pop = self.globl_pop
         self.cur_stats = self.get_stats()
+
+    def connect_aws(self):
+        """
+        Connect to AWS using credentials and create a client to connect to S3.
+        """
+        self.client = boto3.client("s3")
+        self.bucket_name = "covid-19-vaccination-data"
+
+    def set_cur_df(self, file_name=None, raw=False):
+        """
+        Set cur_df by reading csv file from S3 bucket.
+        Params:
+            file_name: file name of the csv file to read from, use current country file if none passed
+            raw: Sets raw_df if true, cur_df if false
+        """
+        if file_name is None:
+            file_name = f"{self.cur_ctry}_vaccinations.csv"
+        object_key = file_name
+        csv_obj = self.client.get_object(Bucket=self.bucket_name, Key=object_key)
+        body = csv_obj["Body"]
+        csv_string = body.read().decode("utf-8")
+        if raw:
+            self.raw_df = pd.read_csv(StringIO(csv_string))
+        else:
+            self.cur_df = pd.read_csv(StringIO(csv_string))
 
     def dropdown_options(self):
         """
@@ -89,7 +117,14 @@ class VaccinationData:
         return ctry_totl
 
     def get_stats(self):
-        """"""
+        """
+        Returns all the stats for the top cards.
+        Returns:
+            date: The most recent date in the dataframe
+            vaccinated: Percentage of population vaccinated
+            threshold: Percentage of people to be vaccinated for herd immunity
+            today: Number of vaccinations today
+        """
         date = datetime.strptime(self.most_recent_date(self.raw_df).strip(), "%Y-%m-%d")
         date = "{} {}".format(self.months[date.month - 1], date.day)
         self.cur_pop = (
@@ -218,11 +253,21 @@ class VaccinationData:
         return top_ctrys, bar_clrs
 
     def past_week(self):
+        """
+        Return last 7 days of current dataframe (exclude most recent day on global dataframe).
+        Returns:
+            past_week: Data corrisponding to last 7 days of current dataframe
+        """
         past_week = self.cur_df.tail(7) if self.cur_iso else self.cur_df.tail(8)[:-1]
         return past_week
 
     def cum_vacc_percent(self):
-        """"""
+        """
+        Returns cumulative percentage of population vaccinated over time.
+        Returns:
+            daily_vacc: Cumulative percentage of vaccinations per day
+            dates: array of all dates in the current df
+        """
         daily_vacc = (
             np.nancumsum(self.cur_df["daily_vaccinations"].values) / self.cur_pop * 100
         )
