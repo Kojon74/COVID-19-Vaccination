@@ -62,7 +62,7 @@ class VaccinationData:
         Connect to AWS using credentials and create a client to connect to S3.
         """
         self.client = boto3.client("s3")
-        self.bucket_name = "covid-19-vaccination-data2"
+        self.bucket_name = "covid-19-vaccination-data3"
 
     def get_auth(self):
         file_name = "auth.csv"
@@ -240,7 +240,7 @@ class VaccinationData:
         """
         totl = []
         date = self.most_recent_date(self.raw_df)
-        date_week_ago = datetime.strptime(date, "%Y-%m-%d") - timedelta(days=7)
+        date_week_ago = datetime.strptime(date.strip(), "%Y-%m-%d") - timedelta(days=7)
         cur_df = self.raw_df.drop(
             self.raw_df[
                 self.raw_df.date.map(lambda x: datetime.strptime(x, "%Y-%m-%d"))
