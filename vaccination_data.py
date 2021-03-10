@@ -62,7 +62,7 @@ class VaccinationData:
         Connect to AWS using credentials and create a client to connect to S3.
         """
         self.client = boto3.client("s3")
-        self.bucket_name = "covid-19-vaccination-data"
+        self.bucket_name = "covid-19-vaccination-data2"
 
     def set_cur_df(self, file_name=None, raw=False):
         """
