@@ -64,6 +64,14 @@ class VaccinationData:
         self.client = boto3.client("s3")
         self.bucket_name = "covid-19-vaccination-data2"
 
+    def get_auth(self):
+        file_name = "auth.csv"
+        object_key = file_name
+        csv_obj = self.client.get_object(Bucket=self.bucket_name, Key=object_key)
+        body = csv_obj["Body"]
+        csv_string = body.read().decode("utf-8")
+        return pd.read_csv(StringIO(csv_string)).values[0]
+
     def set_cur_df(self, file_name=None, raw=False):
         """
         Set cur_df by reading csv file from S3 bucket.

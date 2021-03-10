@@ -1,3 +1,4 @@
+import pandas as pd
 import dash
 import dash_auth
 import dash_core_components as dcc
@@ -7,7 +8,12 @@ import plotly.graph_objects as go
 
 from vaccination_data import VaccinationData
 
-VALID_USERNAME_PASSWORD_PAIRS = {"hello": "world"}
+data = VaccinationData()
+
+auth = data.get_auth()
+print(auth[0], auth[1])
+VALID_USERNAME_PASSWORD_PAIRS = {auth[0]: auth[1]}
+print(VALID_USERNAME_PASSWORD_PAIRS)
 
 external_stylesheets = [
     "https://codepen.io/chriddyp/pen/bWLwgP.css",
@@ -22,7 +28,6 @@ app = dash.Dash(
 auth = dash_auth.BasicAuth(app, VALID_USERNAME_PASSWORD_PAIRS)
 
 server = app.server
-data = VaccinationData()
 
 
 def navbar():
