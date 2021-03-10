@@ -167,7 +167,7 @@ class VaccinationData:
         Returns:
             date: The most recent date in the cur_df
         """
-        date = cur_df.iloc[[-1]]["date"].to_string(index=False)
+        date = cur_df.iloc[[-1]]["date"].to_string(index=False).strip()
         return date
 
     def get_top_countries(self, ctrys):
