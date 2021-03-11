@@ -1,4 +1,3 @@
-import pandas as pd
 import dash
 import dash_auth
 import dash_core_components as dcc
@@ -11,9 +10,7 @@ from vaccination_data import VaccinationData
 data = VaccinationData()
 
 auth = data.get_auth()
-print(auth[0], auth[1])
 VALID_USERNAME_PASSWORD_PAIRS = {auth[0]: auth[1]}
-print(VALID_USERNAME_PASSWORD_PAIRS)
 
 external_stylesheets = [
     "https://codepen.io/chriddyp/pen/bWLwgP.css",
@@ -338,32 +335,18 @@ def dashboard():
     return html.Div(className="dashboard", id="dashboard", children=[homepage()])
 
 
-app.layout = html.Div(children=[navbar(), dashboard()])
+app.layout = html.Div(
+    children=[dcc.Location(id="url", refresh=False), navbar(), dashboard()]
+)
 
 
 @app.callback(
-    Output(component_id="dashboard", component_property="children"),
-    Output(component_id="update-date-stat", component_property="children"),
-    Output(component_id="vaccinated-stat", component_property="children"),
-    Output(component_id="threshold-stat", component_property="children"),
-    Output(component_id="today-stat", component_property="children"),
-    Output(component_id="sparkline-stat", component_property="figure"),
-    Output(component_id="pred-full-vacc", component_property="figure"),
-    Output(component_id="region", component_property="value"),
-    Input(component_id="region", component_property="value"),
-    Input(component_id="nav-header", component_property="n_clicks"),
+    Output("url", "pathname"),
+    Output("region", "value"),
+    Input("region", "value"),
+    Input("nav-header", "n_clicks"),
 )
-def change_page(dropdown_value, n_clicks):
-    """
-    Change page based on change in dropdown menu or by clicking the nav-header.
-    Params:
-        dropdown_value: The country selected in the dropdown menu
-    Returns:
-        page: The layout of the new page
-        date, vaccinated, threshold, today: See VaccinationData.get_stats()
-        sparkline, pred: See corrisponding functions
-        new_dd_value: So that it shows 'Global' in DD when you click nav-header
-    """
+def change_url(dropdown_value, n_clicks):
     ctx = dash.callback_context
     if not ctx.triggered:
         input_id = None
@@ -373,18 +356,33 @@ def change_page(dropdown_value, n_clicks):
         data.cur_ctry, data.cur_iso = "Global", ""
     elif input_id:  # If dropdown clicked
         data.cur_ctry, data.cur_iso = dropdown_value.split(",")
+    new_dd_val = f"{data.cur_ctry},{data.cur_iso}"
+    return data.cur_ctry, new_dd_val
+
+
+@app.callback(
+    Output("dashboard", "children"),
+    Output("update-date-stat", "children"),
+    Output("vaccinated-stat", "children"),
+    Output("threshold-stat", "children"),
+    Output("today-stat", "children"),
+    Output("sparkline-stat", "figure"),
+    Output("pred-full-vacc", "figure"),
+    # Output("region", "value"),
+    Input("url", "pathname"),
+)
+def change_page(country):
     data.set_cur_df()
     page = homepage() if data.cur_ctry == "Global" else countrypage(data.cur_ctry)
     date, vaccinated, threshold, today = data.get_stats()
     sparkline = sparkline_fig()
     pred = pred_full_vacc_fig()
-    new_dd_val = f"{data.cur_ctry},{data.cur_iso}"
-    return page, date, vaccinated, threshold, today, sparkline, pred, new_dd_val
+    return page, date, vaccinated, threshold, today, sparkline, pred
 
 
 @app.callback(
-    Output(component_id="percent-countries", component_property="figure"),
-    Input(component_id="country-rankings", component_property="value"),
+    Output("percent-countries", "figure"),
+    Input("country-rankings", "value"),
     prevent_initial_call=True,
 )
 def switch_ranking_graph(tab):
@@ -397,62 +395,62 @@ def switch_ranking_graph(tab):
     return percent if tab == "percent" else total if tab == "total" else past_week
 
 
-# @app.callback(
-#     Output(component_id="update-date", component_property="children"),
-#     Output(component_id="vaccinated", component_property="children"),
-#     Output(component_id="threshold", component_property="children"),
-#     Output(component_id="today", component_property="children"),
-#     Output(component_id="sparkline", component_property="children"),
-#     Input(component_id="update-date-info", component_property="n_clicks"),
-#     Input(component_id="vaccinated-info", component_property="n_clicks"),
-#     Input(component_id="threshold-info", component_property="n_clicks"),
-#     Input(component_id="today-info", component_property="n_clicks"),
-#     Input(component_id="sparkline-info", component_property="n_clicks"),
-#     State(component_id="update-date", component_property="children"),
-#     State(component_id="vaccinated", component_property="children"),
-#     State(component_id="threshold", component_property="children"),
-#     State(component_id="today", component_property="children"),
-#     State(component_id="sparkline", component_property="children"),
-#     prevent_initial_call=True,
-# )
-# def show_info(n0, n1, n2, n3, n4, s0, s1, s2, s3, s4):
-#     """
-#     Handles the clicking of the info button on the top stats cards.
-#     """
-#     num_clicks = [n0, n1, n2, n3, n4]
-#     cur_states = [s0, s1, s2, s3, s4]
-#     input_ids = ["update-date", "vaccinated", "threshold", "today", "sparkline"]
-#     infos = [
-#         "Data is delayed by a couple days.",
-#         "Percentage of total population vaccinated.",
-#         "Rough estimate of number of people needed to be vaccinated.",
-#         f"Number of people vaccinated {data.most_recent_date(data.raw_df)}",
-#         "Total vaccinations from past 7 days",
-#     ]
-#     headers = [
-#         "Latest Update",
-#         "Vaccinated",
-#         "Herd Immunity Threshold",
-#         "Vaccinated Today",
-#         "Daily Vaccinations Past 7 Days",
-#     ]
-#     ctx = dash.callback_context
-#     index = input_ids.index(ctx.triggered[0]["prop_id"].split(".")[0][:-5])
-#     print(index, num_clicks[index])
-#     if num_clicks[index] % 2:
-#         if index == 4:
-#             cur_states[index] = sparkline_content(sparkline_fig(), infos[index])
-#         else:
-#             cur_states[index] = top_stat_content("", infos[index], input_ids[index])
-#         return cur_states[0], cur_states[1], cur_states[2], cur_states[3], cur_states[4]
-#     else:
-#         if index == 4:
-#             cur_states[index] = sparkline_content(sparkline_fig())
-#         else:
-#             cur_states[index] = top_stat_content(
-#                 data.cur_stats[index], headers[index], input_ids[index]
-#             )
-#         return cur_states[0], cur_states[1], cur_states[2], cur_states[3], cur_states[4]
+@app.callback(
+    Output("update-date", "children"),
+    Output("vaccinated", "children"),
+    Output("threshold", "children"),
+    Output("today", "children"),
+    Output("sparkline", "children"),
+    Input("update-date-info", "n_clicks"),
+    Input("vaccinated-info", "n_clicks"),
+    Input("threshold-info", "n_clicks"),
+    Input("today-info", "n_clicks"),
+    Input("sparkline-info", "n_clicks"),
+    State("update-date", "children"),
+    State("vaccinated", "children"),
+    State("threshold", "children"),
+    State("today", "children"),
+    State("sparkline", "children"),
+    prevent_initial_call=True,
+)
+def show_info(n0, n1, n2, n3, n4, s0, s1, s2, s3, s4):
+    """
+    Handles the clicking of the info button on the top stats cards.
+    """
+    num_clicks = [n0, n1, n2, n3, n4]
+    cur_states = [s0, s1, s2, s3, s4]
+    input_ids = ["update-date", "vaccinated", "threshold", "today", "sparkline"]
+    infos = [
+        "Data is delayed by a couple days.",
+        "Percentage of total population vaccinated.",
+        "Rough estimate of number of people needed to be vaccinated.",
+        f"Number of people vaccinated {data.most_recent_date(data.raw_df)}",
+        "Total vaccinations from past 7 days",
+    ]
+    headers = [
+        "Latest Update",
+        "Vaccinated",
+        "Herd Immunity Threshold",
+        "Vaccinated Today",
+        "Daily Vaccinations Past 7 Days",
+    ]
+    ctx = dash.callback_context
+    index = input_ids.index(ctx.triggered[0]["prop_id"].split(".")[0][:-5])
+    print(index, num_clicks[index])
+    if num_clicks[index] % 2:
+        if index == 4:
+            cur_states[index] = sparkline_content(sparkline_fig(), infos[index])
+        else:
+            cur_states[index] = top_stat_content("", infos[index], input_ids[index])
+        return cur_states[0], cur_states[1], cur_states[2], cur_states[3], cur_states[4]
+    else:
+        if index == 4:
+            cur_states[index] = sparkline_content(sparkline_fig())
+        else:
+            cur_states[index] = top_stat_content(
+                data.cur_stats[index], headers[index], input_ids[index]
+            )
+        return cur_states[0], cur_states[1], cur_states[2], cur_states[3], cur_states[4]
 
 
 if __name__ == "__main__":

@@ -122,6 +122,7 @@ class VaccinationData:
             "daily_vaccinations"
         ].sum()  # Total vaccinations by country
         ctry_totl["iso_code"].fillna("", inplace=True)  # Clean dataset
+        self.country_iso_dict = dict(zip(ctry_totl.country, ctry_totl.iso_code))
         return ctry_totl
 
     def get_stats(self):
