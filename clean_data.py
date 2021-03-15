@@ -9,13 +9,6 @@ dates = list(set(df["date"]))
 dates.sort()
 
 new_headers = ["date", "daily_vaccinations", "people_fully_vaccinated"]
-global_headers = [
-    "country",
-    "date",
-    "daily_vaccinations",
-    "people_fully_vaccinated",
-    "vaccines",
-]
 
 for i, country in enumerate(countries):
     country_df = df[df["country"] == country][new_headers]
@@ -27,9 +20,7 @@ for i, date in enumerate(dates):
     sum_column = list(cur_dates_df.sum(axis=0, numeric_only=True))
     sum_column.insert(0, date)
     data.append(sum_column)
-dates_df = pd.DataFrame(
-    data, columns=["date", "daily_vaccinations", "people_fully_vaccinated"]
-)
+dates_df = pd.DataFrame(data, columns=new_headers)
 dates_df.head
 
 dates_df.to_csv("./data/Global_vaccinations.csv", index=False, header=True)

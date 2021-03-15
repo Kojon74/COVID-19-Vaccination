@@ -175,7 +175,7 @@ def top_stat_content(stat, heading, class_id):
         children=[
             html.H2(className="stat", id=f"{class_id}-stat", children=stat),
             html.H6(className="header", id=f"{class_id}-header", children=heading),
-        ]
+        ],
     )
 
 
@@ -247,7 +247,7 @@ def sparkline():
         children=[
             html.Button(
                 className="info-button",
-                id=f"sparkline-info",
+                id="sparkline-info",
                 children=html.P(className="info", children="?"),
             ),
             html.Div(id="sparkline", children=sparkline_content(sparkline_fig())),
@@ -401,24 +401,24 @@ def switch_ranking_graph(tab):
     Output("threshold", "children"),
     Output("today", "children"),
     Output("sparkline", "children"),
+    # Output("update-date-info", "n_clicks"),
+    # Output("vaccinated-info", "n_clicks"),
+    # Output("threshold-info", "n_clicks"),
+    # Output("today-info", "n_clicks"),
+    # Output("sparkline-info", "n_clicks"),
     Input("update-date-info", "n_clicks"),
     Input("vaccinated-info", "n_clicks"),
     Input("threshold-info", "n_clicks"),
     Input("today-info", "n_clicks"),
     Input("sparkline-info", "n_clicks"),
-    State("update-date", "children"),
-    State("vaccinated", "children"),
-    State("threshold", "children"),
-    State("today", "children"),
-    State("sparkline", "children"),
     prevent_initial_call=True,
 )
-def show_info(n0, n1, n2, n3, n4, s0, s1, s2, s3, s4):
+def show_info(n0, n1, n2, n3, n4):
     """
     Handles the clicking of the info button on the top stats cards.
     """
     num_clicks = [n0, n1, n2, n3, n4]
-    cur_states = [s0, s1, s2, s3, s4]
+    cur_states = [dash.no_update] * len(num_clicks)
     input_ids = ["update-date", "vaccinated", "threshold", "today", "sparkline"]
     infos = [
         "Data is delayed by a couple days.",
@@ -436,13 +436,14 @@ def show_info(n0, n1, n2, n3, n4, s0, s1, s2, s3, s4):
     ]
     ctx = dash.callback_context
     index = input_ids.index(ctx.triggered[0]["prop_id"].split(".")[0][:-5])
-    print(index, num_clicks[index])
+    cur_states[0] = top_stat_content("", infos[0], input_ids[0])
+    return cur_states
     if num_clicks[index] % 2:
         if index == 4:
             cur_states[index] = sparkline_content(sparkline_fig(), infos[index])
         else:
             cur_states[index] = top_stat_content("", infos[index], input_ids[index])
-        return cur_states[0], cur_states[1], cur_states[2], cur_states[3], cur_states[4]
+        return cur_states + num_clicks
     else:
         if index == 4:
             cur_states[index] = sparkline_content(sparkline_fig())
@@ -450,7 +451,7 @@ def show_info(n0, n1, n2, n3, n4, s0, s1, s2, s3, s4):
             cur_states[index] = top_stat_content(
                 data.cur_stats[index], headers[index], input_ids[index]
             )
-        return cur_states[0], cur_states[1], cur_states[2], cur_states[3], cur_states[4]
+        return cur_states + num_clicks
 
 
 if __name__ == "__main__":

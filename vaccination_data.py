@@ -27,7 +27,7 @@ class VaccinationData:
             "Dec",
         ]
         self.connect_aws()
-        self.set_cur_df("_raw_data.csv", True)
+        self.set_raw_df()
         self.globl_pop = 7_800_000_000
         self.herd_imm_thrsh = 70
         self.set_home()
@@ -62,7 +62,7 @@ class VaccinationData:
         Connect to AWS using credentials and create a client to connect to S3.
         """
         self.client = boto3.client("s3")
-        self.bucket_name = "covid-19-vaccination-data3"
+        self.bucket_name = "covid-19-vaccination-data"
 
     def get_auth(self):
         file_name = "auth.csv"
@@ -72,23 +72,36 @@ class VaccinationData:
         csv_string = body.read().decode("utf-8")
         return pd.read_csv(StringIO(csv_string)).values[0]
 
-    def set_cur_df(self, file_name=None, raw=False):
+    def set_raw_df(self):
         """
         Set cur_df by reading csv file from S3 bucket.
         Params:
             file_name: file name of the csv file to read from, use current country file if none passed
             raw: Sets raw_df if true, cur_df if false
         """
-        if file_name is None:
-            file_name = f"{self.cur_ctry}_vaccinations.csv"
+        file_name = "_raw_data.csv"
         object_key = file_name
         csv_obj = self.client.get_object(Bucket=self.bucket_name, Key=object_key)
         body = csv_obj["Body"]
         csv_string = body.read().decode("utf-8")
-        if raw:
-            self.raw_df = pd.read_csv(StringIO(csv_string))
+        self.raw_df = pd.read_csv(StringIO(csv_string))
+
+    def set_cur_df(self):
+        """"""
+        new_headers = ["date", "daily_vaccinations", "people_fully_vaccinated"]
+        if self.cur_ctry == "Global":
+            dates = sorted(list(set(self.raw_df["date"])))
+            data = []
+            for i, date in enumerate(dates):
+                cur_dates_df = self.raw_df[self.raw_df["date"] == date][new_headers]
+                sum_column = list(cur_dates_df.sum(axis=0, numeric_only=True))
+                sum_column.insert(0, date)
+                data.append(sum_column)
+            self.cur_df = pd.DataFrame(data, columns=new_headers)
         else:
-            self.cur_df = pd.read_csv(StringIO(csv_string))
+            self.cur_df = self.raw_df[self.raw_df["country"] == self.cur_ctry][
+                new_headers
+            ]
 
     def dropdown_options(self):
         """

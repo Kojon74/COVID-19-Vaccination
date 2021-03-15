@@ -1,6 +1,15 @@
+data/
+
 env/
 
-.DS_Store
+lambda/
+
+*.DS_Store
+
+auth.csv
+
+update_dataset.*
+clean_data.*
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
