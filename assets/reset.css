@@ -165,17 +165,41 @@ body {
   text-align: center;
 }
 
-.pred-full-vacc-container {
+.pred-full-vacc-container-container {
   padding-top: 10px;
   box-sizing: border-box;
   display: flex;
+  flex: 5;
   flex-direction: column;
-  flex: 6;
   margin-right: 7px;
 }
 
-.pred-full-vacc-graph {
+.pred-full-vacc-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.pred-full-vacc-container .header-cont {
   flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pred-full-vacc-container .header {
+  font-size: 25px;
+}
+
+.pred-full-vacc-container .toggle-cont {
+  margin: 5px 20px 0 0;
+}
+
+.pred-full-vacc-container .change-axis {
+  /* float: right; */
+}
+
+.pred-full-vacc-graph {
+  flex: 5;
 }
 
 /* Dashboard End */

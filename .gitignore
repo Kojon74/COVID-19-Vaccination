@@ -2,7 +2,8 @@ data/
 
 env/
 
-lambda/
+lambda_update_dataset/
+lambda_restart_eb/
 
 *.DS_Store
 

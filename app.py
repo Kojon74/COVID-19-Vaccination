@@ -1,5 +1,8 @@
+from datetime import datetime, timedelta
+
 import dash
 import dash_auth
+import dash_daq as daq
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
@@ -271,7 +274,7 @@ def top_stats():
     )
 
 
-def pred_full_vacc_fig():
+def pred_full_vacc_fig(change_axis=False):
     """
     Returns line chart of cumulative vaccination percentage over time.
     """
@@ -279,10 +282,13 @@ def pred_full_vacc_fig():
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=dates, y=daily_vacc))
     fig.update_layout(
-        title="Predicted Fully Vaccinated Date",
         xaxis_title="Date",
         yaxis_title="Percentage of Population Vaccinated (%)",
+        margin=dict(t=3, l=10, b=3, r=10),
     )
+    if change_axis:
+        fig.update_xaxes(range=[dates[0], datetime(2021, 9, 1)])
+        fig.update_yaxes(range=[0, 70])
     return fig
 
 
@@ -292,11 +298,37 @@ def pred_full_vacc():
     """
     fig = pred_full_vacc_fig()
     return html.Div(
-        className="pred-full-vacc-container",
+        className="pred-full-vacc-container-container",
         children=[
-            dcc.Graph(
-                className="pred-full-vacc-graph card", id="pred-full-vacc", figure=fig
-            ),
+            html.Div(
+                className="pred-full-vacc-container card",
+                children=[
+                    html.Div(
+                        className="header-cont",
+                        children=[
+                            html.H3(
+                                className="header", children="Vaccination Progress"
+                            ),
+                            html.Div(
+                                className="toggle-cont",
+                                children=[
+                                    daq.ToggleSwitch(
+                                        className="change-axis",
+                                        id="change-axis",
+                                        value=False,
+                                    ),
+                                    html.P("Zoom out"),
+                                ],
+                            ),
+                        ],
+                    ),
+                    dcc.Graph(
+                        className="pred-full-vacc-graph",
+                        id="pred-full-vacc",
+                        figure=fig,
+                    ),
+                ],
+            )
         ],
     )
 
@@ -368,10 +400,18 @@ def change_url(dropdown_value, n_clicks):
     Output("today-stat", "children"),
     Output("sparkline-stat", "figure"),
     Output("pred-full-vacc", "figure"),
-    # Output("region", "value"),
     Input("url", "pathname"),
+    Input("change-axis", "value"),
 )
-def change_page(country):
+def change_page(country, change_axis):
+    ctx = dash.callback_context
+    if not ctx.triggered:
+        input_id = None
+    else:
+        input_id = ctx.triggered[0]["prop_id"].split(".")[0]
+    if input_id == "change-axis":
+        pred = pred_full_vacc_fig(change_axis)
+        return [dash.no_update] * 6 + [pred]
     data.set_cur_df()
     page = homepage() if data.cur_ctry == "Global" else countrypage(data.cur_ctry)
     date, vaccinated, threshold, today = data.get_stats()
@@ -396,16 +436,16 @@ def switch_ranking_graph(tab):
 
 
 @app.callback(
-    Output("update-date", "children"),
-    Output("vaccinated", "children"),
-    Output("threshold", "children"),
-    Output("today", "children"),
-    Output("sparkline", "children"),
-    # Output("update-date-info", "n_clicks"),
-    # Output("vaccinated-info", "n_clicks"),
-    # Output("threshold-info", "n_clicks"),
-    # Output("today-info", "n_clicks"),
-    # Output("sparkline-info", "n_clicks"),
+    Output("update-date-stat", "style"),
+    Output("vaccinated-stat", "style"),
+    Output("threshold-stat", "style"),
+    Output("today-stat", "style"),
+    Output("sparkline-stat", "style"),
+    Output("update-date-header", "children"),
+    Output("vaccinated-header", "children"),
+    Output("threshold-header", "children"),
+    Output("today-header", "children"),
+    Output("sparkline-header", "children"),
     Input("update-date-info", "n_clicks"),
     Input("vaccinated-info", "n_clicks"),
     Input("threshold-info", "n_clicks"),
@@ -418,7 +458,8 @@ def show_info(n0, n1, n2, n3, n4):
     Handles the clicking of the info button on the top stats cards.
     """
     num_clicks = [n0, n1, n2, n3, n4]
-    cur_states = [dash.no_update] * len(num_clicks)
+    state_stats = [dash.no_update] * len(num_clicks)
+    state_header = [dash.no_update] * len(num_clicks)
     input_ids = ["update-date", "vaccinated", "threshold", "today", "sparkline"]
     infos = [
         "Data is delayed by a couple days.",
@@ -436,22 +477,11 @@ def show_info(n0, n1, n2, n3, n4):
     ]
     ctx = dash.callback_context
     index = input_ids.index(ctx.triggered[0]["prop_id"].split(".")[0][:-5])
-    cur_states[0] = top_stat_content("", infos[0], input_ids[0])
-    return cur_states
-    if num_clicks[index] % 2:
-        if index == 4:
-            cur_states[index] = sparkline_content(sparkline_fig(), infos[index])
-        else:
-            cur_states[index] = top_stat_content("", infos[index], input_ids[index])
-        return cur_states + num_clicks
-    else:
-        if index == 4:
-            cur_states[index] = sparkline_content(sparkline_fig())
-        else:
-            cur_states[index] = top_stat_content(
-                data.cur_stats[index], headers[index], input_ids[index]
-            )
-        return cur_states + num_clicks
+    style = "none" if num_clicks[index] % 2 else "block"
+    desc = infos if num_clicks[index] % 2 else headers
+    state_stats[index] = {"display": style}
+    state_header[index] = desc[index]
+    return state_stats + state_header
 
 
 if __name__ == "__main__":
