@@ -49,6 +49,7 @@ class VaccinationData:
             "white": "#fff",
             "black": "#000",
         }
+        self.sept = datetime(2021, 9, 1)
 
     def set_home(self):
         self.cur_ctry = "Global"
