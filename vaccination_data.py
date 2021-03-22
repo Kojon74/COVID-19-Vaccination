@@ -1,6 +1,8 @@
 import boto3
+import copy
 import pandas as pd
 import numpy as np
+import pycountry
 import pypopulation
 from datetime import datetime, timedelta
 from io import StringIO
@@ -42,7 +44,7 @@ class VaccinationData:
         self.num_ctrys = 195
         self.dropdown_options = self.dropdown_options()
         self.clrs = {
-            "primary": "#87ceeb",
+            "primary": "rgb(65, 151, 203)",
             "secondary": "#166484",
             "tertiary": "#fdfeff",
             "red": "#ff0000",
@@ -185,7 +187,7 @@ class VaccinationData:
         date = cur_df.iloc[[-1]]["date"].to_string(index=False).strip()
         return date
 
-    def get_top_countries(self, ctrys):
+    def get_top_countries(self, ctrys, all_ctrys=False):
         """
         Sort list of countries and get the top 10 and Canada.
         Params:
@@ -194,15 +196,38 @@ class VaccinationData:
             top_ctrys: Top 10 countries ordered by percentage/total and Canada
         """
         ctrys.sort(key=lambda x: x[1], reverse=True)
-        top_ctrys = ctrys[:10]
-        can, i = next(((x, i) for i, x in enumerate(ctrys) if x[0] == "Canada"), None)
-        can[0] = f"Canada #{i}"
-        top_ctrys.append(can)  # Add Canada to end of
+        if all_ctrys:  # Get all countries
+            top_ctrys = ctrys
+        else:  # Get top 10 countries + Canada
+            top_ctrys = ctrys[:10]
+            can, i = next(
+                ((x, i) for i, x in enumerate(ctrys) if x[0] == "Canada"), None
+            )
+            can[0] = f"Canada #{i}"
+            top_ctrys.append(can)
+
+        if all_ctrys:
+            set_ctrys = set([ctry[0] for ctry in ctrys])
+            zero_ctrys = [
+                [ctry.name, 0]
+                for ctry in pycountry.countries
+                if ctry.name not in set_ctrys
+            ]
+            top_ctrys += zero_ctrys
+            top_ctrys = list(zip(*top_ctrys))
+            log_ctrys = copy.deepcopy(top_ctrys)
+            log_ctrys[1] = [x if x else 0.1 for x in log_ctrys[1]]
+            log_ctrys[1] = np.log2(
+                log_ctrys[1],
+            )
+            log_ctrys[1] = log_ctrys[1]
+            return top_ctrys, log_ctrys
+
         top_ctrys.reverse()
         top_ctrys = list(zip(*top_ctrys))
         return top_ctrys
 
-    def top_countries_percent(self):
+    def top_countries_percent(self, all_ctrys=False):
         """
         Get top 10 countries with highest vaccination percentages.
         Returns:
@@ -216,8 +241,11 @@ class VaccinationData:
             if c_iso != "":
                 pop = pypopulation.get_population(c_iso)
             if pop:
-                pctg.append([c_ctry, int(c_vacc / pop * 100)])
-        top_ctrys = self.get_top_countries(pctg)
+                pctg.append([c_ctry, min(100, int(c_vacc / pop * 100))])
+        if all_ctrys:
+            top_ctrys, log_ctrys = self.get_top_countries(pctg, all_ctrys)
+            return top_ctrys, log_ctrys
+        top_ctrys = self.get_top_countries(pctg, all_ctrys)
         num_over_thrsh = sum(1 for x in top_ctrys[1] if x > 70)
         bar_clrs = [self.clrs["primary"]] * num_over_thrsh + [self.clrs["white"]] * (
             11 - num_over_thrsh
@@ -226,7 +254,7 @@ class VaccinationData:
         bar_clrs.reverse()
         return top_ctrys, bar_clrs
 
-    def top_countries_total(self):
+    def top_countries_total(self, all_ctrys=False):
         """
         Get top 10 countrieswith highest total vaccinations.
         Returns:
@@ -241,12 +269,15 @@ class VaccinationData:
                 pop = pypopulation.get_population(c_iso)
             if pop:
                 totl.append([c_ctry, c_vacc])
+        if all_ctrys:
+            top_ctrys, log_ctrys = self.get_top_countries(totl, all_ctrys)
+            return top_ctrys, log_ctrys
         top_ctrys = self.get_top_countries(totl)
         bar_clrs = [self.clrs["primary"]] * 10 + [self.clrs["red"]]
         bar_clrs.reverse()
         return top_ctrys, bar_clrs
 
-    def top_countries_past_week(self):
+    def top_countries_past_week(self, all_ctrys=False):
         """
         Get top 10 countries with highest total vaccinations in past week.
         Returns:
@@ -270,6 +301,9 @@ class VaccinationData:
                 pop = pypopulation.get_population(c_iso)
             if pop:
                 totl.append([c_ctry, c_vacc])
+        if all_ctrys:
+            top_ctrys, log_ctrys = self.get_top_countries(totl, all_ctrys)
+            return top_ctrys, log_ctrys
         top_ctrys = self.get_top_countries(totl)
         bar_clrs = [self.clrs["primary"]] * 10 + [self.clrs["red"]]
         bar_clrs.reverse()

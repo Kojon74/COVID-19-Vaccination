@@ -1,5 +1,3 @@
-from datetime import datetime, timedelta
-
 import dash
 from dash.dependencies import Input, Output, State
 
@@ -29,22 +27,19 @@ class Callbacks:
         )(self.change_url)
 
         app.callback(
-            Output("dashboard", "children"),
+            Output("country-rankings-cont", "style"),
             Output("update-date-stat", "children"),
             Output("vaccinated-stat", "children"),
             Output("threshold-stat", "children"),
             Output("today-stat", "children"),
             Output("sparkline-stat", "figure"),
+            Output("percent-countries", "figure"),
             Output("pred-full-vacc", "figure"),
+            Output("toggle-cont", "style"),
             Input("url", "pathname"),
             Input("change-axis", "value"),
-        )(self.change_page)
-
-        app.callback(
-            Output("percent-countries", "figure"),
             Input("country-rankings", "value"),
-            prevent_initial_call=True,
-        )(self.switch_ranking_graph)
+        )(self.change_page)
 
         app.callback(
             Output("update-date-stat", "style"),
@@ -78,42 +73,51 @@ class Callbacks:
         new_dd_val = f"{self.data.cur_ctry},{self.data.cur_iso}"
         return self.data.cur_ctry, new_dd_val
 
-    def change_page(self, country, change_axis):
+    def change_page(self, country, change_axis, tab):
         ctx = dash.callback_context
         if not ctx.triggered:
             input_id = None
         else:
             input_id = ctx.triggered[0]["prop_id"].split(".")[0]
+
         if input_id == "change-axis":
+            print("True")
             pred = self.vaccination_progress.pred_full_vacc_fig(change_axis)
-            return [dash.no_update] * 6 + [pred]
+            return [dash.no_update] * 7 + [pred, dash.no_update]
+
+        if input_id == "country-rankings":
+            percent = self.country_rankings.percent_rankings()
+            total = self.country_rankings.total_rankings()
+            past_week = self.country_rankings.past_week_rankings()
+            tab_fig = (
+                percent if tab == "percent" else total if tab == "total" else past_week
+            )
+            pred = self.vaccination_progress.map_fig(tab)
+            return [dash.no_update] * 6 + [tab_fig, pred, dash.no_update]
+
         self.data.set_cur_df()
-        page = (
-            self.dashboard.homepage()
-            if self.data.cur_ctry == "Global"
-            else self.dashboard.countrypage(self.data.cur_ctry)
-        )
+        style = "block" if self.data.cur_ctry == "Global" else "none"
+        page = {"display": style}
         date, vaccinated, threshold, today = self.data.get_stats()
         sparkline = self.top_stats.sparkline_fig()
-        pred = self.vaccination_progress.pred_full_vacc_fig()
-        return page, date, vaccinated, threshold, today, sparkline, pred
-
-    def switch_ranking_graph(self, tab):
-        """
-        Return the correct figure based on the current tab.
-        """
-        percent = self.country_rankings.percent_rankings()
-        total = self.country_rankings.total_rankings()
-        past_week = self.country_rankings.past_week_rankings()
-        # map_p = self.country_rankings.map_ranking()
+        print(self.data.cur_ctry)
+        pred = (
+            self.vaccination_progress.map_fig()
+            if self.data.cur_ctry == "Global"
+            else self.vaccination_progress.pred_full_vacc_fig()
+        )
+        show_toggle = "none" if self.data.cur_ctry == "Global" else "block"
+        show_toggle = {"display": show_toggle}
         return (
-            percent
-            if tab == "percent"
-            else total
-            if tab == "total"
-            else past_week
-            # if tab == "past-week"
-            # else map_p
+            page,
+            date,
+            vaccinated,
+            threshold,
+            today,
+            sparkline,
+            dash.no_update,
+            pred,
+            show_toggle,
         )
 
     def show_info(self, n0, n1, n2, n3, n4):

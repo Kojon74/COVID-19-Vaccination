@@ -14,10 +14,10 @@ class Dashboard:
         Returns layout for right hand side component.
         """
         top_stats = TopStats(self.data).top_stats()
-        pred_full_vacc = VaccinationProgress(self.data).pred_full_vacc()
+        vaccination_progress = VaccinationProgress(self.data).vaccination_progress()
         return html.Div(
             className="right",
-            children=[top_stats, pred_full_vacc],
+            children=[top_stats, vaccination_progress],
         )
 
     def homepage(self):

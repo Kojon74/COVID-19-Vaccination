@@ -25,11 +25,46 @@ class VaccinationProgress:
             fig.update_yaxes(range=[0, 70])
         return fig
 
-    def pred_full_vacc(self):
+    def map_fig(self, tab="percent"):
+        """"""
+        func_map_data = (
+            self.data.top_countries_percent
+            if tab == "percent"
+            else self.data.top_countries_total
+            if tab == "total"
+            else self.data.top_countries_past_week
+        )
+        top_ctrys, log_ctrys = func_map_data(all_ctrys=True)
+        percent = "%" if tab == "percent" else ""
+        fig = go.Figure(
+            data=go.Choropleth(
+                locationmode="country names",
+                locations=top_ctrys[0],
+                z=top_ctrys[1],
+                text=[
+                    "{:,}".format(int(top_ctry[1])) + f"{percent}<br>{top_ctry[0]}"
+                    for top_ctry in list(zip(*top_ctrys))
+                ],
+                hoverinfo="text",
+                colorbar=dict(
+                    ticksuffix=percent
+                    # tickvals=[top_ctrys[1][0], top_ctrys[1][-1]],
+                    # ticktext=[top_ctrys[1][0], top_ctrys[1][-1]],
+                ),
+                colorscale=[[0, "rgb(255, 255, 255)"], [1, "rgb(0, 0, 255)"]],
+            ),
+        )
+        fig.update_geos(projection_type="orthographic")
+        fig.update_layout(
+            margin=dict(t=5, l=10, b=5, r=10),
+        )
+        return fig
+
+    def vaccination_progress(self):
         """
         Returns layout of predicted fuly vaccinated date chart.
         """
-        fig = self.pred_full_vacc_fig()
+        fig = self.map_fig()
         return html.Div(
             className="pred-full-vacc-container-container",
             children=[
@@ -44,6 +79,7 @@ class VaccinationProgress:
                                 ),
                                 html.Div(
                                     className="toggle-cont",
+                                    id="toggle-cont",
                                     children=[
                                         daq.ToggleSwitch(
                                             className="change-axis",
@@ -64,9 +100,3 @@ class VaccinationProgress:
                 )
             ],
         )
-
-    def map(self):
-        return html.Div()
-
-    def vaccination_progress(self, page):
-        component = self.map() if page == "Global" else self.pred_full_vacc()

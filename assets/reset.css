@@ -1,5 +1,5 @@
 :root {
-  --primary: #87ceeb;
+  --primary: rgb(65, 151, 203);
   --secondary: #166484;
   --tertiary: #ecf7fc;
   --lightgray: #f8f8f8;
@@ -192,6 +192,7 @@ body {
 }
 
 .pred-full-vacc-container .toggle-cont {
+  display: none;
   margin: 5px 20px 0 0;
 }
 

@@ -71,24 +71,6 @@ class CountryRankings:
         )
         return fig
 
-    # def map_ranking(self):
-    #     """"""
-    #     top_ctrys, log_ctrys, _ = self.data.top_countries_percent(all_ctrys=True)
-    #     fig = go.Figure(
-    #         data=go.Choropleth(
-    #             locationmode="country names",
-    #             locations=top_ctrys[0],
-    #             z=log_ctrys[1],
-    #             text=top_ctrys[1],
-    #             # colorbar_title="Covid-19 Vaccination (%)",
-    #         )
-    #     )
-    #     fig.update_geos(projection_type="orthographic")
-    #     fig.update_layout(
-    #         margin=dict(t=5, l=10, b=5, r=10),
-    #     )
-    #     return fig
-
     def country_rankings(self):
         """
         Returns layout for country ranking chart.
@@ -96,6 +78,7 @@ class CountryRankings:
         fig = self.percent_rankings()
         return html.Div(
             className="percent-countries-container",
+            id="country-rankings-cont",
             children=[
                 dcc.Tabs(
                     className="tabs",
@@ -120,12 +103,6 @@ class CountryRankings:
                             selected_className="tab-selected",
                             label="7 Days",
                             value="past-week",
-                        ),
-                        dcc.Tab(
-                            className="custom-tab",
-                            selected_className="tab-selected",
-                            label="Map",
-                            value="map",
                         ),
                     ],
                 ),

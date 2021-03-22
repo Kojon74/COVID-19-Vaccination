@@ -46,7 +46,7 @@ class TopStats:
                 x=list(range(7)),
                 y=past_week["daily_vaccinations"],
                 marker=dict(size=1),
-                line=dict(color="#87ceeb"),
+                line=dict(color=self.data.clrs["primary"]),
             )
         )
         fig.update_xaxes(visible=False, fixedrange=True)
