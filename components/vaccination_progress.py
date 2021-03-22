@@ -14,10 +14,15 @@ class VaccinationProgress:
         """
         daily_vacc, dates = self.data.cum_vacc_percent()
         fig = go.Figure()
-        fig.add_trace(go.Scatter(x=dates, y=daily_vacc))
+        fig.add_trace(
+            go.Scatter(
+                x=dates, y=daily_vacc, line=dict(color=self.data.clrs["primary"])
+            )
+        )
         fig.update_layout(
             xaxis_title="Date",
             yaxis_title="Percentage of Population Vaccinated (%)",
+            plot_bgcolor="lightgray",
             margin=dict(t=3, l=10, b=3, r=10),
         )
         if change_axis:
@@ -26,7 +31,11 @@ class VaccinationProgress:
         return fig
 
     def map_fig(self, tab="percent"):
-        """"""
+        """
+        Returns a map visually representing vaccination progress by country.
+        Param:
+            tab: Indicates what data to use (percent, total, or past week)
+        """
         func_map_data = (
             self.data.top_countries_percent
             if tab == "percent"
@@ -38,6 +47,8 @@ class VaccinationProgress:
         percent = "%" if tab == "percent" else ""
         fig = go.Figure(
             data=go.Choropleth(
+                # marker_line_color="lightgray",
+                marker_line_width=0.01,
                 locationmode="country names",
                 locations=top_ctrys[0],
                 z=top_ctrys[1],
@@ -46,23 +57,24 @@ class VaccinationProgress:
                     for top_ctry in list(zip(*top_ctrys))
                 ],
                 hoverinfo="text",
-                colorbar=dict(
-                    ticksuffix=percent
-                    # tickvals=[top_ctrys[1][0], top_ctrys[1][-1]],
-                    # ticktext=[top_ctrys[1][0], top_ctrys[1][-1]],
-                ),
-                colorscale=[[0, "rgb(255, 255, 255)"], [1, "rgb(0, 0, 255)"]],
+                colorbar=dict(ticksuffix=percent),
+                colorscale=[[0, self.data.clrs["secondary"]], [1, "black"]],
             ),
         )
-        fig.update_geos(projection_type="orthographic")
+        fig.update_geos(
+            showframe=False,
+            showcoastlines=False,
+            projection_type="orthographic",
+        )
         fig.update_layout(
+            # dragmode=False,
             margin=dict(t=5, l=10, b=5, r=10),
         )
         return fig
 
     def vaccination_progress(self):
         """
-        Returns layout of predicted fuly vaccinated date chart.
+        Returns a chart that visually represents the vaccination progress with a map or line chart.
         """
         fig = self.map_fig()
         return html.Div(
@@ -95,6 +107,7 @@ class VaccinationProgress:
                             className="pred-full-vacc-graph",
                             id="pred-full-vacc",
                             figure=fig,
+                            config=dict(scrollZoom=True),
                         ),
                     ],
                 )

@@ -9,6 +9,7 @@ body {
   margin: 0;
   background-color: var(--lightgray);
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* Navbar Start */
@@ -26,7 +27,9 @@ body {
   padding: 0;
   border: none;
   color: white;
-  font-size: 20px;
+  font-size: 25px;
+  font-weight: 500;
+  text-transform: capitalize;
 }
 
 .nav .dropdown {

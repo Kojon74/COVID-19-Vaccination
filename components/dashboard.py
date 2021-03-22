@@ -30,12 +30,6 @@ class Dashboard:
             children=[country_rankings, self.right()],
         )
 
-    def countrypage(self, country):
-        """
-        Returns layout for specific coutry's page.
-        """
-        return html.Div(className="country-page", children=[self.right()])
-
     def dashboard(self):
         """
         Returns top-level layout

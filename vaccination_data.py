@@ -45,7 +45,7 @@ class VaccinationData:
         self.dropdown_options = self.dropdown_options()
         self.clrs = {
             "primary": "rgb(65, 151, 203)",
-            "secondary": "#166484",
+            "secondary": "#C1DDED",
             "tertiary": "#fdfeff",
             "red": "#ff0000",
             "white": "#fff",
@@ -150,7 +150,7 @@ class VaccinationData:
             threshold: Percentage of people to be vaccinated for herd immunity
             today: Number of vaccinations today
         """
-        date = datetime.strptime(self.most_recent_date(self.raw_df).strip(), "%Y-%m-%d")
+        date = datetime.strptime(self.most_recent_date(self.cur_df).strip(), "%Y-%m-%d")
         date = "{} {}".format(self.months[date.month - 1], date.day)
         self.cur_pop = (
             self.globl_pop
@@ -192,6 +192,7 @@ class VaccinationData:
         Sort list of countries and get the top 10 and Canada.
         Params:
             ctrys: List of countries (Country name, measure to order by)
+            all_ctrys: Returns all countries if True, top 10 + Canada if False
         Returns:
             top_ctrys: Top 10 countries ordered by percentage/total and Canada
         """
@@ -214,14 +215,6 @@ class VaccinationData:
                 if ctry.name not in set_ctrys
             ]
             top_ctrys += zero_ctrys
-            top_ctrys = list(zip(*top_ctrys))
-            log_ctrys = copy.deepcopy(top_ctrys)
-            log_ctrys[1] = [x if x else 0.1 for x in log_ctrys[1]]
-            log_ctrys[1] = np.log2(
-                log_ctrys[1],
-            )
-            log_ctrys[1] = log_ctrys[1]
-            return top_ctrys, log_ctrys
 
         top_ctrys.reverse()
         top_ctrys = list(zip(*top_ctrys))
@@ -230,6 +223,8 @@ class VaccinationData:
     def top_countries_percent(self, all_ctrys=False):
         """
         Get top 10 countries with highest vaccination percentages.
+        Params:
+            all_ctrys: Returns all countries if True, top 10 + Canada if False
         Returns:
             top_ctrys: The top 10 countries by percentage and Canada
             bar_clrs: List of colors for bar graph
@@ -242,10 +237,8 @@ class VaccinationData:
                 pop = pypopulation.get_population(c_iso)
             if pop:
                 pctg.append([c_ctry, min(100, int(c_vacc / pop * 100))])
-        if all_ctrys:
-            top_ctrys, log_ctrys = self.get_top_countries(pctg, all_ctrys)
-            return top_ctrys, log_ctrys
         top_ctrys = self.get_top_countries(pctg, all_ctrys)
+
         num_over_thrsh = sum(1 for x in top_ctrys[1] if x > 70)
         bar_clrs = [self.clrs["primary"]] * num_over_thrsh + [self.clrs["white"]] * (
             11 - num_over_thrsh
@@ -257,6 +250,8 @@ class VaccinationData:
     def top_countries_total(self, all_ctrys=False):
         """
         Get top 10 countrieswith highest total vaccinations.
+        Params:
+            all_ctrys: Returns all countries if True, top 10 + Canada if False
         Returns:
             top_ctrys: The top 10 countries by total and Canada
             bar_clrs: List of colors for bar graph
@@ -269,10 +264,8 @@ class VaccinationData:
                 pop = pypopulation.get_population(c_iso)
             if pop:
                 totl.append([c_ctry, c_vacc])
-        if all_ctrys:
-            top_ctrys, log_ctrys = self.get_top_countries(totl, all_ctrys)
-            return top_ctrys, log_ctrys
-        top_ctrys = self.get_top_countries(totl)
+        top_ctrys = self.get_top_countries(totl, all_ctrys)
+
         bar_clrs = [self.clrs["primary"]] * 10 + [self.clrs["red"]]
         bar_clrs.reverse()
         return top_ctrys, bar_clrs
@@ -280,6 +273,8 @@ class VaccinationData:
     def top_countries_past_week(self, all_ctrys=False):
         """
         Get top 10 countries with highest total vaccinations in past week.
+        Params:
+            all_ctrys: Returns all countries if True, top 10 + Canada if False
         Returns:
             top_ctrys: The top 10 countries by total in the past week and Canada
             bar_clrs: List of colors for bar graph
@@ -301,10 +296,7 @@ class VaccinationData:
                 pop = pypopulation.get_population(c_iso)
             if pop:
                 totl.append([c_ctry, c_vacc])
-        if all_ctrys:
-            top_ctrys, log_ctrys = self.get_top_countries(totl, all_ctrys)
-            return top_ctrys, log_ctrys
-        top_ctrys = self.get_top_countries(totl)
+        top_ctrys = self.get_top_countries(totl, all_ctrys)
         bar_clrs = [self.clrs["primary"]] * 10 + [self.clrs["red"]]
         bar_clrs.reverse()
         return top_ctrys, bar_clrs
