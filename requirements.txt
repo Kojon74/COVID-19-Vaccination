@@ -6,6 +6,7 @@ boto3==1.17.22
 pandas==1.1.5
 dash_core_components==1.15.0
 plotly==4.14.3
+pycountry==20.7.3
 pypopulation==2020.3
 gunicorn==20.0.4
 dash_daq==0.5.0
