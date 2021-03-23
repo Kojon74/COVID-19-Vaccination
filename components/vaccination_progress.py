@@ -48,7 +48,7 @@ class VaccinationProgress:
         fig = go.Figure(
             data=go.Choropleth(
                 # marker_line_color="lightgray",
-                marker_line_width=0.01,
+                marker_line_width=0.1,
                 locationmode="country names",
                 locations=top_ctrys[0],
                 z=top_ctrys[1],
